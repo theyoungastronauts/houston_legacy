@@ -1,0 +1,62 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}RestService extends RestService {
+  String get basePath => "/{{#paramCase}}{{modelName}}{{/paramCase}}";
+
+  Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}> retrieve(String uuid) async {
+    try {
+      final response = await getHttp('$basePath/$uuid');
+      return {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<PaginatedResponse<{{#pascalCase}}{{modelName}}{{/pascalCase}}>> list({int page = 1, int limit = 10, String? path, Map<String, dynamic> params = const {},}) async {
+    try {
+      path ??= basePath;
+      final builtParams = {
+        ...buildPage(page),
+        ...buildLimit(limit),
+        ...params,
+      };
+
+      final response = await getHttp(path, params: builtParams);
+
+      List<{{#pascalCase}}{{modelName}}{{/pascalCase}}> results =
+          response['results'].map<{{#pascalCase}}{{modelName}}{{/pascalCase}}>((item) => {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(item)).toList();
+
+      return PaginatedResponse(
+        count: response['count'],
+        page: response['page'],
+        num_pages: response['num_pages'],
+        results: results,
+      );
+    } catch (e, stackTrace) {
+      Debugger.error("Problem fetching $path", e, stackTrace);
+      return PaginatedResponse.empty();
+    }
+  }
+
+  Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}?> save({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+    return {{#camelCase}}{{modelName}}{{/camelCase}}.id != 0 ? _update({{#camelCase}}{{modelName}}{{/camelCase}}) : _create({{#camelCase}}{{modelName}}{{/camelCase}});
+  }
+
+  Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}?> _create({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+    final p = await postHttp(basePath, params: {{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
+    return {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(p);
+  }
+
+  Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}?> _update({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+    final p = await patchHttp("$basePath/${{#camelCase}}{{modelName}}{{/camelCase}}.uuid}", params: {{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
+    return {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(p);
+  }
+
+  Future<bool> delete({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+    try {
+      await deleteHttp("$basePath/${{#camelCase}}{{modelName}}{{/camelCase}}.uuid}");
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+}

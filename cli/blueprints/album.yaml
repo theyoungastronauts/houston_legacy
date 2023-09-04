@@ -1,0 +1,14 @@
+name: album
+properties:
+  -
+    name: title
+    type: char
+    max_length: 100
+    ui_heading: 1
+  -
+    name: description
+    type: text
+    ui_heading: 2
+  -
+    name: year
+    type: int

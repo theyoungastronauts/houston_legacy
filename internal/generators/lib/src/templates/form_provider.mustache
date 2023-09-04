@@ -1,0 +1,88 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}FormProvider extends StateNotifier<{{#pascalCase}}{{modelName}}{{/pascalCase}}> {
+
+  final Ref ref;
+  final String uuid;
+  final GlobalKey<FormState> formKey = GlobalKey();
+  bool changesMade = false;
+
+  {{#pascalCase}}{{className}}{{/pascalCase}}FormProvider(this.ref, this.uuid, {{#pascalCase}}{{modelName}}{{/pascalCase}} initialState) : super(initialState) {
+    load(uuid);
+    fieldListeners();
+  }
+
+  void load(String uuid) async {
+    {{#pascalCase}}{{modelName}}{{/pascalCase}}? {{#camelCase}}{{modelName}}{{/camelCase}};
+    if(uuid.isNotEmpty){
+      {{#camelCase}}{{modelName}}{{/camelCase}} = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().retrieve(uuid:uuid);
+    }
+    state = {{#camelCase}}{{modelName}}{{/camelCase}} ?? {{#pascalCase}}{{modelName}}{{/pascalCase}}.empty();
+    setFields();
+    changesMade = false;
+  }
+
+  Future<bool> discard() async {
+    if (changesMade) {
+      final confirmed = await ConfirmDialog.show(title: "Are you sure you want to discard all unsaved changes?");
+
+      if (confirmed != true) {
+        return false;
+      }
+    }
+    clear();
+    return true;
+  }
+
+  void clear() {
+    state = {{#pascalCase}}{{modelName}}{{/pascalCase}}.empty();
+    clearFields();
+  }
+
+  Future<bool?> delete() async {
+    final confirmed = await ConfirmDialog.show(
+      title: 'Are you sure you want to delete this {{#titleCase}}{{modelName}}{{/titleCase}}?',
+      destructive: true,
+    );
+
+    if (confirmed == true) {
+
+      ref.read(globalLoadingProvider.notifier).start();
+      final success = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().delete(state);
+      ref.read(globalLoadingProvider.notifier).complete();
+
+      if (success) {
+        ref.read({{#camelCase}}{{modelName}}{{/camelCase}}ListProvider.notifier).refresh();
+        Toast.message("{{#titleCase}}{{modelName}}{{/titleCase}} deleted.");
+        return true;
+      } else {
+        Toast.error();
+        return false;
+      }
+    }
+    return null;
+  }
+
+  Future<bool?> submit() async {
+    if (!formKey.currentState!.validate()) {
+      return null;
+    }
+
+    ref.read(globalLoadingProvider.notifier).start();
+    final {{#camelCase}}{{modelName}}{{/camelCase}} = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().save(state);
+
+    if ({{#camelCase}}{{modelName}}{{/camelCase}} != null) {
+      state = {{#camelCase}}{{modelName}}{{/camelCase}};
+      ref.read({{#camelCase}}{{modelName}}{{/camelCase}}ListProvider.notifier).refresh();
+      ref.invalidate({{#camelCase}}{{modelName}}{{/camelCase}}DetailProvider({{#camelCase}}{{modelName}}{{/camelCase}}.uuid));
+      ref.read(globalLoadingProvider.notifier).complete();
+      return true;
+    }
+
+    ref.read(globalLoadingProvider.notifier).complete();
+    return false;
+  }
+
+  void fieldListeners() {}
+  void setFields() {}
+  void clearFields() {}
+
+}

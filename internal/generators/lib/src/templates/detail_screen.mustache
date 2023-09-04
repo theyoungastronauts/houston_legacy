@@ -1,0 +1,37 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}DetailScreen extends BaseScreen {
+  final String uuid;
+  const {{#pascalCase}}{{className}}{{/pascalCase}}DetailScreen({
+    super.key,
+    @PathParam('uuid') required this.uuid,
+  });
+
+  @override
+  AppBar? appBar(BuildContext context, WidgetRef ref) {
+    final {{#camelCase}}{{modelName}}{{/camelCase}} = ref.watch({{#camelCase}}{{modelName}}{{/camelCase}}DetailProvider(uuid));
+
+    return {{#camelCase}}{{modelName}}{{/camelCase}}.when(
+      loading: () => AppBar(
+        title: const Text("{{#titleCase}}{{modelName}}{{/titleCase}}"),
+      ),
+      data: ({{#camelCase}}{{modelName}}{{/camelCase}}) => AppBar(
+        title: Text("{{#camelCase}}{{modelName}}{{/camelCase}}"),
+      ),
+      error: (_, __) => AppBar(
+        title: const Text("Error"),
+      ),
+    );
+  }
+
+  @override
+  Widget body(BuildContext context, WidgetRef ref) {
+    final _{{#camelCase}}{{modelName}}{{/camelCase}} = ref.watch({{#camelCase}}{{modelName}}{{/camelCase}}DetailProvider(uuid));
+
+    return _{{#camelCase}}{{modelName}}{{/camelCase}}.when(
+      data: ({{#camelCase}}{{modelName}}{{/camelCase}}) => Text("{{#camelCase}}{{modelName}}{{/camelCase}}"),
+      error: (_, __) => const EmptyPlaceholder(title: "Error"),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}

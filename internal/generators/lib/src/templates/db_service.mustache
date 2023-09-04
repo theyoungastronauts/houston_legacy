@@ -1,0 +1,36 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}DbService extends DbService {
+    @override
+    String get table => "{{#snakeCase}}{{modelName}}{{/snakeCase}}";
+
+    Future<DbListResponse<{{#pascalCase}}{{modelName}}{{/pascalCase}}>> list(int page, {int limit = 10, String? select}) async {
+        final response = await listData(page, limit: limit, select: select);
+    
+        return DbListResponse<{{#pascalCase}}{{modelName}}{{/pascalCase}}>(
+          results: response.data.map<{{#pascalCase}}{{modelName}}{{/pascalCase}}>((item) => {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(item)).toList() ?? [],
+          status: response.status,
+          count: response.count ?? 0,
+          page: page,
+          limit: limit,
+        );
+    }
+
+    Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}?> retrieve({int? id, String? uuid, String? select}) async {
+        final response = await retrieveDataByIdentifier(id: id, uuid: uuid, select: select);
+        return response != null ? {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(response) : null;
+    }
+
+    Future<{{#pascalCase}}{{modelName}}{{/pascalCase}}?> save({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+        dynamic response;
+        if({{#camelCase}}{{modelName}}{{/camelCase}}.exists){
+            response = await updateData({{#camelCase}}{{modelName}}{{/camelCase}}.id, {{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
+        } else {
+            response = insertData({{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
+        }
+        return response != null ? {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(response) : null;
+    }
+
+    Future<bool> delete({{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}}) async {
+        return await deleteData({{#camelCase}}{{modelName}}{{/camelCase}}.id);
+    }
+
+}

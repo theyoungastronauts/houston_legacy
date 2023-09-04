@@ -1,0 +1,27 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}Form extends BaseComponent {
+  final String uuid;
+  const {{#pascalCase}}{{className}}{{/pascalCase}}Form({Key? key, required this.uuid}) : super(key: key);
+
+  @override
+  Widget body(BuildContext context, WidgetRef ref) {
+    final provider = ref.read({{#camelCase}}{{modelName}}{{/camelCase}}FormProvider(uuid).notifier);
+    final {{#camelCase}}{{modelName}}{{/camelCase}} = ref.watch({{#camelCase}}{{modelName}}{{/camelCase}}FormProvider(uuid));
+
+    return SingleChildScrollView(
+      child: Form(
+        key: provider.formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: fields(context, ref, provider, {{#camelCase}}{{modelName}}{{/camelCase}}),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> fields(BuildContext context, WidgetRef ref, {{#pascalCase}}{{modelName}}{{/pascalCase}}FormProvider provider, {{#pascalCase}}{{modelName}}{{/pascalCase}} model) {
+    return [];
+  }
+}

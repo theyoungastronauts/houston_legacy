@@ -1,0 +1,11 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}Card extends BaseComponent {
+  final {{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}};
+  const {{#pascalCase}}{{className}}{{/pascalCase}}Card(this.{{#camelCase}}{{modelName}}{{/camelCase}}, { Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Card(
+      child: Text("{{#camelCase}}{{modelName}}{{/camelCase}}"),
+    );
+  }
+}

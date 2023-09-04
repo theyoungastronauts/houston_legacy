@@ -1,0 +1,27 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}ListScreen extends BaseScreen {
+  const {{#pascalCase}}{{className}}{{/pascalCase}}ListScreen({super.key});
+
+  @override
+  AppBar? appBar(BuildContext context, WidgetRef ref) {
+    return AppBar(
+      title: const Text("{{#titleCase}}{{modelName}}{{/titleCase}} List"),
+      actions: const [],
+    );
+  }
+
+  @override
+  FloatingActionButton? floatingActionButton(BuildContext context, WidgetRef ref) {
+    return FloatingActionButton(
+      onPressed: () {
+        ref.read({{#camelCase}}{{modelName}}{{/camelCase}}FormProvider.notifier).clear();
+        AutoRouter.of(context).push(const {{#pascalCase}}{{modelName}}{{/pascalCase}}EditRoute());
+      },
+      child: const Icon(Icons.add),
+    );
+  }
+
+  @override
+  Widget body(BuildContext context, WidgetRef ref) {
+    return const {{#pascalCase}}{{modelName}}{{/pascalCase}}List();
+  }
+}

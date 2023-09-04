@@ -1,0 +1,12 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}ListTile extends BaseComponent {
+  final {{#pascalCase}}{{modelName}}{{/pascalCase}} {{#camelCase}}{{modelName}}{{/camelCase}};
+  const {{#pascalCase}}{{className}}{{/pascalCase}}ListTile(this.{{#camelCase}}{{modelName}}{{/camelCase}}, { Key? key }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: Text("{{#camelCase}}{{modelName}}{{/camelCase}}"),
+      subtitle: Text("{{#camelCase}}{{modelName}}{{/camelCase}}"),
+    );
+  }
+}

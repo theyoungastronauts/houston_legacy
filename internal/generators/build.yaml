@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      generators|annotations:
+        enabled: true
+
+builders:
+  generators:
+    target: ":generators"
+    import: "package:generators/generators.dart"
+    builder_factories: ["generateRestService", "generateDbService", "generateListProvider", "generateFormProvider", "generateListScreen", "generateDetailScreen", "generateCard", "generateForm", "generateListTile", "generateList"]
+    build_extensions: { ".dart": [".g.part"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

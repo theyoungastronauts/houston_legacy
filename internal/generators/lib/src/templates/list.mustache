@@ -1,0 +1,15 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}List extends BaseComponent {
+  const {{#pascalCase}}{{className}}{{/pascalCase}}List({super.key});
+
+  @override
+  Widget body(BuildContext context, WidgetRef ref) {
+    final listProvider = ref.watch({{#camelCase}}{{modelName}}{{/camelCase}}ListProvider.notifier);
+
+    return InfiniteList<{{#pascalCase}}{{modelName}}{{/pascalCase}}>(
+      pagingController: listProvider.pagingController,
+      itemBuilder: (context, {{#camelCase}}{{modelName}}{{/camelCase}}, index) => {{#pascalCase}}{{modelName}}{{/pascalCase}}Card({{#camelCase}}{{modelName}}{{/camelCase}}),
+      emptyText: "No {{#titleCase}}{{modelName}}{{/titleCase}}s",
+      onRefresh: listProvider.refresh,
+    );
+  }
+}

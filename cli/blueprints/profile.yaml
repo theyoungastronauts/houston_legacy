@@ -1,0 +1,12 @@
+name: profile
+properties:
+  -
+    name: avatar
+    type: char
+    max_length: 255
+  -
+    name: bio
+    type: text
+  -
+    name: created_at
+    type: datetime

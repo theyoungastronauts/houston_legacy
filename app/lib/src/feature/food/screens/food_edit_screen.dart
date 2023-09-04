@@ -1,0 +1,31 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/screens/base_screen.dart';
+import '../components/food_form.dart';
+import '../components/food_form_actions.dart';
+
+@RoutePage()
+class FoodEditScreen extends BaseScreen {
+  final String uuid;
+  const FoodEditScreen({super.key, @PathParam('uuid') required this.uuid});
+
+  @override
+  AppBar? appBar(BuildContext context, WidgetRef ref) {
+    return AppBar(
+      title: const Text("Edit Food"),
+      actions: const [],
+    );
+  }
+
+  @override
+  Widget? bottomNavigationBar(BuildContext context, WidgetRef ref) {
+    return FoodFormActions(uuid: uuid);
+  }
+
+  @override
+  Widget body(BuildContext context, WidgetRef ref) {
+    return FoodForm(uuid: uuid);
+  }
+}

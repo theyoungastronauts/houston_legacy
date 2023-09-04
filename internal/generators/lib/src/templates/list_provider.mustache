@@ -1,0 +1,31 @@
+class {{#pascalCase}}{{className}}{{/pascalCase}}ListProvider extends StateNotifier<List<{{#pascalCase}}{{modelName}}{{/pascalCase}}>> {
+  final PagingController<int, {{#pascalCase}}{{modelName}}{{/pascalCase}}> pagingController = PagingController(firstPageKey: 1);
+
+  {{#pascalCase}}{{className}}{{/pascalCase}}ListProvider([List<{{#pascalCase}}{{modelName}}{{/pascalCase}}> initialItems = const []]) : super(initialItems) {
+    pagingController.addPageRequestListener((page) {
+      fetchPage(page);
+    });
+  }
+
+  Future<void> fetchPage(int page) async {
+    try {
+      final response = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().list(page);
+
+      if (response.canLoadMore) {
+        pagingController.appendPage(response.results, page + 1);
+      } else {
+        pagingController.appendLastPage(response.results);
+      }
+
+      state = [...state, ...response.results];
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  void refresh() {
+    state = [];
+    pagingController.refresh();
+  }
+}
+
