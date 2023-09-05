@@ -37,7 +37,7 @@ class HoustonProfileDbService extends DbService {
     if (profile.exists) {
       response = await updateData(profile.id, profile.toJson());
     } else {
-      response = insertData(profile.toJson());
+      response = await insertData(profile.toJson());
     }
     return response != null ? Profile.fromJson(response) : null;
   }

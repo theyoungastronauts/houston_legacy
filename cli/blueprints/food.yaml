@@ -8,3 +8,6 @@ properties:
   - 
     name: profile
     type: Profile
+  -
+    name: created_at
+    type: datetime

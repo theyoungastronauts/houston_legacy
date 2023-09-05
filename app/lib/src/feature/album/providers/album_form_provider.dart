@@ -1,6 +1,7 @@
 import 'package:annotations/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/utils/dialogs.dart';
 import '../../../core/utils/toast.dart';
 import '../../../core/utils/validation.dart';
@@ -10,6 +11,7 @@ import '../models/album.dart';
 import '../services/album_db_service.dart';
 import 'album_detail_provider.dart';
 import 'album_list_provider.dart';
+import '../../../core/providers/session_provider.dart';
 
 part 'album_form_provider.g.dart';
 
@@ -57,6 +59,14 @@ class AlbumFormProvider extends HoustonAlbumFormProvider {
     titleController.text = '';
     descriptionController.text = '';
     yearController.text = '';
+  }
+
+  @override
+  void handleEmpty() {
+    final profile = ref.read(sessionProvider).profile;
+    if (profile != null) {
+      state = Album.empty().copyWith(profile: profile);
+    }
   }
 }
 

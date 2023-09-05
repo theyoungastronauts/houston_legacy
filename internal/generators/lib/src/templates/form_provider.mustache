@@ -11,13 +11,23 @@ class {{#pascalCase}}{{className}}{{/pascalCase}}FormProvider extends StateNotif
   }
 
   void load(String uuid) async {
-    {{#pascalCase}}{{modelName}}{{/pascalCase}}? {{#camelCase}}{{modelName}}{{/camelCase}};
     if(uuid.isNotEmpty){
-      {{#camelCase}}{{modelName}}{{/camelCase}} = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().retrieve(uuid:uuid);
+      final {{#camelCase}}{{modelName}}{{/camelCase}} = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().retrieve(uuid:uuid);
+      if({{#camelCase}}{{modelName}}{{/camelCase}} != null){
+        state = {{#camelCase}}{{modelName}}{{/camelCase}};
+      } else {
+        handleEmpty();
+      }
+    } else {
+      handleEmpty();
     }
-    state = {{#camelCase}}{{modelName}}{{/camelCase}} ?? {{#pascalCase}}{{modelName}}{{/pascalCase}}.empty();
+
     setFields();
     changesMade = false;
+  }
+
+  void handleEmpty() {
+    state = {{#pascalCase}}{{modelName}}{{/pascalCase}}.empty();
   }
 
   Future<bool> discard() async {
@@ -33,7 +43,7 @@ class {{#pascalCase}}{{className}}{{/pascalCase}}FormProvider extends StateNotif
   }
 
   void clear() {
-    state = {{#pascalCase}}{{modelName}}{{/pascalCase}}.empty();
+    handleEmpty();
     clearFields();
   }
 

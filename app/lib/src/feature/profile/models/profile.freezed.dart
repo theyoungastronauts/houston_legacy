@@ -20,11 +20,13 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Profile {
+  @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false)
   String get uuid => throw _privateConstructorUsedError;
   String get avatar => throw _privateConstructorUsedError;
   String get bio => throw _privateConstructorUsedError;
-  @JsonKey(name: "created_at")
+  @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,11 +40,11 @@ abstract class $ProfileCopyWith<$Res> {
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
   $Res call(
-      {int id,
-      String uuid,
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
       String avatar,
       String bio,
-      @JsonKey(name: "created_at") DateTime createdAt});
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 }
 
 /// @nodoc
@@ -97,11 +99,11 @@ abstract class _$$_ProfileCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String uuid,
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
       String avatar,
       String bio,
-      @JsonKey(name: "created_at") DateTime createdAt});
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 }
 
 /// @nodoc
@@ -149,26 +151,29 @@ class __$$_ProfileCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Profile extends _Profile {
   _$_Profile(
-      {required this.id,
-      required this.uuid,
+      {@JsonKey(includeToJson: false) required this.id,
+      @JsonKey(includeToJson: false) required this.uuid,
       required this.avatar,
       required this.bio,
-      @JsonKey(name: "created_at") required this.createdAt})
+      @JsonKey(name: "created_at", includeToJson: false)
+      required this.createdAt})
       : super._();
 
   factory _$_Profile.fromJson(Map<String, dynamic> json) =>
       _$$_ProfileFromJson(json);
 
   @override
+  @JsonKey(includeToJson: false)
   final int id;
   @override
+  @JsonKey(includeToJson: false)
   final String uuid;
   @override
   final String avatar;
   @override
   final String bio;
   @override
-  @JsonKey(name: "created_at")
+  @JsonKey(name: "created_at", includeToJson: false)
   final DateTime createdAt;
 
   @override
@@ -210,26 +215,28 @@ class _$_Profile extends _Profile {
 
 abstract class _Profile extends Profile {
   factory _Profile(
-          {required final int id,
-          required final String uuid,
-          required final String avatar,
-          required final String bio,
-          @JsonKey(name: "created_at") required final DateTime createdAt}) =
-      _$_Profile;
+      {@JsonKey(includeToJson: false) required final int id,
+      @JsonKey(includeToJson: false) required final String uuid,
+      required final String avatar,
+      required final String bio,
+      @JsonKey(name: "created_at", includeToJson: false)
+      required final DateTime createdAt}) = _$_Profile;
   _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$_Profile.fromJson;
 
   @override
+  @JsonKey(includeToJson: false)
   int get id;
   @override
+  @JsonKey(includeToJson: false)
   String get uuid;
   @override
   String get avatar;
   @override
   String get bio;
   @override
-  @JsonKey(name: "created_at")
+  @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)

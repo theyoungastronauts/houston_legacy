@@ -11,10 +11,12 @@ class Food with _$Food {
   const Food._();
 
   factory Food({
-    required int id,
-    required String uuid,
+    @JsonKey(includeToJson: false) required int id,
+    @JsonKey(includeToJson: false) required String uuid,
     required String name,
     @JsonKey(toJson: profileToJson) required Profile profile,
+    @JsonKey(name: "created_at", includeToJson: false)
+    required DateTime createdAt,
   }) = _Food;
 
   factory Food.fromJson(Map<String, dynamic> json) => _$FoodFromJson(json);
@@ -25,6 +27,7 @@ class Food with _$Food {
       uuid: '',
       name: "",
       profile: Profile.empty(),
+      createdAt: DateTime.now(),
     );
   }
 

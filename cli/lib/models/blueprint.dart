@@ -40,7 +40,6 @@ class BluePrint {
     final List<String> importStrings = [];
     for (final p in properties) {
       if (!PRIMITIVE_TYPES.contains(p.type)) {
-        print(p.type);
         if (p.type == "user") {
           importStrings.add("import 'package:app/src/core/utils/user_utils.dart';");
           importStrings.add("import 'package:supabase_flutter/supabase_flutter.dart';");
@@ -207,6 +206,23 @@ TextFormField(
     return functions;
   }
 
+  bool get includesProfile {
+    return properties.firstWhereOrNull((p) => p.type.toLowerCase() == "profile") != null;
+  }
+
+  String? get emptyFormOverride {
+    if (includesProfile) {
+      return """@override
+      void handleEmpty(){
+        final profile = ref.read(sessionProvider).profile;
+        if(profile != null){
+          state = ${pascalCase(name)}.empty().copyWith(profile: profile);
+        }
+      }""";
+    }
+    return null;
+  }
+
   Map<String, dynamic> serialize() {
     return {
       'project': appName(),
@@ -230,6 +246,8 @@ TextFormField(
       'appJoins': appJoins,
       'appHasJoins': appJoins.isNotEmpty,
       'appToJsonFunctions': toJsonFunctions,
+      'emptyFormOverride': emptyFormOverride,
+      'formProviderImportSession': includesProfile,
     };
   }
 }

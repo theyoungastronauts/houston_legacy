@@ -12,12 +12,13 @@ _$_Album _$$_AlbumFromJson(Map<String, dynamic> json) => _$_Album(
       title: json['title'] as String,
       description: json['description'] as String,
       year: json['year'] as int,
+      profile: Profile.fromJson(json['profile'] as Map<String, dynamic>),
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$_AlbumToJson(_$_Album instance) => <String, dynamic>{
-      'id': instance.id,
-      'uuid': instance.uuid,
       'title': instance.title,
       'description': instance.description,
       'year': instance.year,
+      'profile': profileToJson(instance.profile),
     };

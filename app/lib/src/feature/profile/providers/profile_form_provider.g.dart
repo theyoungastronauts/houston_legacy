@@ -19,13 +19,23 @@ class HoustonProfileFormProvider extends StateNotifier<Profile> {
   }
 
   void load(String uuid) async {
-    Profile? profile;
     if (uuid.isNotEmpty) {
-      profile = await ProfileDbService().retrieve(uuid: uuid);
+      final profile = await ProfileDbService().retrieve(uuid: uuid);
+      if (profile != null) {
+        state = profile;
+      } else {
+        handleEmpty();
+      }
+    } else {
+      handleEmpty();
     }
-    state = profile ?? Profile.empty();
+
     setFields();
     changesMade = false;
+  }
+
+  void handleEmpty() {
+    state = Profile.empty();
   }
 
   Future<bool> discard() async {
@@ -42,7 +52,7 @@ class HoustonProfileFormProvider extends StateNotifier<Profile> {
   }
 
   void clear() {
-    state = Profile.empty();
+    handleEmpty();
     clearFields();
   }
 

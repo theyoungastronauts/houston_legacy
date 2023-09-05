@@ -24,7 +24,7 @@ class {{#pascalCase}}{{className}}{{/pascalCase}}DbService extends DbService {
         if({{#camelCase}}{{modelName}}{{/camelCase}}.exists){
             response = await updateData({{#camelCase}}{{modelName}}{{/camelCase}}.id, {{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
         } else {
-            response = insertData({{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
+            response = await insertData({{#camelCase}}{{modelName}}{{/camelCase}}.toJson());
         }
         return response != null ? {{#pascalCase}}{{modelName}}{{/pascalCase}}.fromJson(response) : null;
     }

@@ -20,11 +20,15 @@ Food _$FoodFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Food {
+  @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false)
   String get uuid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(toJson: profileToJson)
   Profile get profile => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at", includeToJson: false)
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,10 +41,11 @@ abstract class $FoodCopyWith<$Res> {
       _$FoodCopyWithImpl<$Res, Food>;
   @useResult
   $Res call(
-      {int id,
-      String uuid,
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
       String name,
-      @JsonKey(toJson: profileToJson) Profile profile});
+      @JsonKey(toJson: profileToJson) Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 
   $ProfileCopyWith<$Res> get profile;
 }
@@ -62,6 +67,7 @@ class _$FoodCopyWithImpl<$Res, $Val extends Food>
     Object? uuid = null,
     Object? name = null,
     Object? profile = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,6 +86,10 @@ class _$FoodCopyWithImpl<$Res, $Val extends Food>
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 
@@ -99,10 +109,11 @@ abstract class _$$_FoodCopyWith<$Res> implements $FoodCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String uuid,
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
       String name,
-      @JsonKey(toJson: profileToJson) Profile profile});
+      @JsonKey(toJson: profileToJson) Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 
   @override
   $ProfileCopyWith<$Res> get profile;
@@ -121,6 +132,7 @@ class __$$_FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res, _$_Food>
     Object? uuid = null,
     Object? name = null,
     Object? profile = null,
+    Object? createdAt = null,
   }) {
     return _then(_$_Food(
       id: null == id
@@ -139,6 +151,10 @@ class __$$_FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res, _$_Food>
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -147,27 +163,34 @@ class __$$_FoodCopyWithImpl<$Res> extends _$FoodCopyWithImpl<$Res, _$_Food>
 @JsonSerializable()
 class _$_Food extends _Food {
   _$_Food(
-      {required this.id,
-      required this.uuid,
+      {@JsonKey(includeToJson: false) required this.id,
+      @JsonKey(includeToJson: false) required this.uuid,
       required this.name,
-      @JsonKey(toJson: profileToJson) required this.profile})
+      @JsonKey(toJson: profileToJson) required this.profile,
+      @JsonKey(name: "created_at", includeToJson: false)
+      required this.createdAt})
       : super._();
 
   factory _$_Food.fromJson(Map<String, dynamic> json) => _$$_FoodFromJson(json);
 
   @override
+  @JsonKey(includeToJson: false)
   final int id;
   @override
+  @JsonKey(includeToJson: false)
   final String uuid;
   @override
   final String name;
   @override
   @JsonKey(toJson: profileToJson)
   final Profile profile;
+  @override
+  @JsonKey(name: "created_at", includeToJson: false)
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Food(id: $id, uuid: $uuid, name: $name, profile: $profile)';
+    return 'Food(id: $id, uuid: $uuid, name: $name, profile: $profile, createdAt: $createdAt)';
   }
 
   @override
@@ -178,12 +201,15 @@ class _$_Food extends _Food {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.profile, profile) || other.profile == profile));
+            (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, uuid, name, profile);
+  int get hashCode =>
+      Object.hash(runtimeType, id, uuid, name, profile, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -201,24 +227,30 @@ class _$_Food extends _Food {
 
 abstract class _Food extends Food {
   factory _Food(
-          {required final int id,
-          required final String uuid,
-          required final String name,
-          @JsonKey(toJson: profileToJson) required final Profile profile}) =
-      _$_Food;
+      {@JsonKey(includeToJson: false) required final int id,
+      @JsonKey(includeToJson: false) required final String uuid,
+      required final String name,
+      @JsonKey(toJson: profileToJson) required final Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false)
+      required final DateTime createdAt}) = _$_Food;
   _Food._() : super._();
 
   factory _Food.fromJson(Map<String, dynamic> json) = _$_Food.fromJson;
 
   @override
+  @JsonKey(includeToJson: false)
   int get id;
   @override
+  @JsonKey(includeToJson: false)
   String get uuid;
   @override
   String get name;
   @override
   @JsonKey(toJson: profileToJson)
   Profile get profile;
+  @override
+  @JsonKey(name: "created_at", includeToJson: false)
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$_FoodCopyWith<_$_Food> get copyWith => throw _privateConstructorUsedError;

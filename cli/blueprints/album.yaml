@@ -1,5 +1,6 @@
 name: album
 properties:
+
   -
     name: title
     type: char
@@ -12,3 +13,9 @@ properties:
   -
     name: year
     type: int
+  - 
+    name: profile
+    type: Profile
+  -
+    name: created_at
+    type: datetime

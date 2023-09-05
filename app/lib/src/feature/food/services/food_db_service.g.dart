@@ -35,7 +35,7 @@ class HoustonFoodDbService extends DbService {
     if (food.exists) {
       response = await updateData(food.id, food.toJson());
     } else {
-      response = insertData(food.toJson());
+      response = await insertData(food.toJson());
     }
     return response != null ? Food.fromJson(response) : null;
   }

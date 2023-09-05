@@ -9,8 +9,8 @@ import 'package:dcli/dcli.dart';
 
 Future<void> main(List<String> args) async {
   await scaffoldFeature("food");
-  // await scaffoldFeature("album");
-  // await scaffoldFeature("profile");
+  await scaffoldFeature("album");
+  await scaffoldFeature("profile");
 
   print(white("Running generate function in flutter project..."));
 

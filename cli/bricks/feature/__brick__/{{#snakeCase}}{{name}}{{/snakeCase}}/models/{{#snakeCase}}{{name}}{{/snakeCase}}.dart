@@ -12,8 +12,8 @@ class {{#pascalCase}}{{name}}{{/pascalCase}} with _${{#pascalCase}}{{name}}{{/pa
   const {{#pascalCase}}{{name}}{{/pascalCase}}._();
 
   factory {{#pascalCase}}{{name}}{{/pascalCase}}({
-    required int id,
-    required String uuid,
+    @JsonKey(includeToJson: false) required int id,
+    @JsonKey(includeToJson: false) required String uuid,
     {{#properties}}{{{appModelEntry}}}
     {{/properties}}
   }) = _{{#pascalCase}}{{name}}{{/pascalCase}};

@@ -16,9 +16,6 @@ _$_Profile _$$_ProfileFromJson(Map<String, dynamic> json) => _$_Profile(
 
 Map<String, dynamic> _$$_ProfileToJson(_$_Profile instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'uuid': instance.uuid,
       'avatar': instance.avatar,
       'bio': instance.bio,
-      'created_at': instance.createdAt.toIso8601String(),
     };

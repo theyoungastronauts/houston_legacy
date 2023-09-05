@@ -36,7 +36,7 @@ class HoustonAlbumDbService extends DbService {
     if (album.exists) {
       response = await updateData(album.id, album.toJson());
     } else {
-      response = insertData(album.toJson());
+      response = await insertData(album.toJson());
     }
     return response != null ? Album.fromJson(response) : null;
   }

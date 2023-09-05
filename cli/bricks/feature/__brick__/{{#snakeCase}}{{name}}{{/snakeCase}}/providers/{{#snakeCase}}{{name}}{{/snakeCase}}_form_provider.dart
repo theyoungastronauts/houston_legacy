@@ -1,6 +1,7 @@
 import 'package:annotations/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/utils/dialogs.dart';
 import '../../../core/utils/toast.dart';
 import '../../../core/utils/validation.dart';
@@ -10,6 +11,7 @@ import '../models/{{#snakeCase}}{{name}}{{/snakeCase}}.dart';
 import '../services/{{#snakeCase}}{{name}}{{/snakeCase}}_db_service.dart';
 import '{{#snakeCase}}{{name}}{{/snakeCase}}_detail_provider.dart';
 import '{{#snakeCase}}{{name}}{{/snakeCase}}_list_provider.dart';
+{{#formProviderImportSession}}import '../../../core/providers/session_provider.dart';{{/formProviderImportSession}}
 
 part '{{#snakeCase}}{{name}}{{/snakeCase}}_form_provider.g.dart';
 
@@ -38,6 +40,8 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}FormProvider extends Houston{{#pasca
     {{#appFormClearers}}{{{.}}}
     {{/appFormClearers}}
   }
+
+  {{#emptyFormOverride}}{{{.}}}{{/emptyFormOverride}}
   
 }
 

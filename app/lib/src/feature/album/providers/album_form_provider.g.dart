@@ -19,13 +19,23 @@ class HoustonAlbumFormProvider extends StateNotifier<Album> {
   }
 
   void load(String uuid) async {
-    Album? album;
     if (uuid.isNotEmpty) {
-      album = await AlbumDbService().retrieve(uuid: uuid);
+      final album = await AlbumDbService().retrieve(uuid: uuid);
+      if (album != null) {
+        state = album;
+      } else {
+        handleEmpty();
+      }
+    } else {
+      handleEmpty();
     }
-    state = album ?? Album.empty();
+
     setFields();
     changesMade = false;
+  }
+
+  void handleEmpty() {
+    state = Album.empty();
   }
 
   Future<bool> discard() async {
@@ -42,7 +52,7 @@ class HoustonAlbumFormProvider extends StateNotifier<Album> {
   }
 
   void clear() {
-    state = Album.empty();
+    handleEmpty();
     clearFields();
   }
 

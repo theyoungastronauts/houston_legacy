@@ -6,4 +6,7 @@ import 'package:app/src/feature/album/models/album.dart';
 part 'album_db_service.g.dart';
 
 @houstonDbService
-class AlbumDbService extends HoustonAlbumDbService {}
+class AlbumDbService extends HoustonAlbumDbService {
+  @override
+  String get defaultSelect => "*,profile(*)";
+}

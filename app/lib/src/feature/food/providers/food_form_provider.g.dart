@@ -19,13 +19,23 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
   }
 
   void load(String uuid) async {
-    Food? food;
     if (uuid.isNotEmpty) {
-      food = await FoodDbService().retrieve(uuid: uuid);
+      final food = await FoodDbService().retrieve(uuid: uuid);
+      if (food != null) {
+        state = food;
+      } else {
+        handleEmpty();
+      }
+    } else {
+      handleEmpty();
     }
-    state = food ?? Food.empty();
+
     setFields();
     changesMade = false;
+  }
+
+  void handleEmpty() {
+    state = Food.empty();
   }
 
   Future<bool> discard() async {
@@ -42,7 +52,7 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
   }
 
   void clear() {
-    state = Food.empty();
+    handleEmpty();
     clearFields();
   }
 

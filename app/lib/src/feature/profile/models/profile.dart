@@ -8,11 +8,12 @@ class Profile with _$Profile {
   const Profile._();
 
   factory Profile({
-    required int id,
-    required String uuid,
+    @JsonKey(includeToJson: false) required int id,
+    @JsonKey(includeToJson: false) required String uuid,
     required String avatar,
     required String bio,
-    @JsonKey(name: "created_at") required DateTime createdAt,
+    @JsonKey(name: "created_at", includeToJson: false)
+    required DateTime createdAt,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>

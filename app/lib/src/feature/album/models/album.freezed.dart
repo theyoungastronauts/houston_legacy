@@ -20,11 +20,17 @@ Album _$AlbumFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Album {
+  @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(includeToJson: false)
   String get uuid => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   int get year => throw _privateConstructorUsedError;
+  @JsonKey(toJson: profileToJson)
+  Profile get profile => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at", includeToJson: false)
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +42,16 @@ abstract class $AlbumCopyWith<$Res> {
   factory $AlbumCopyWith(Album value, $Res Function(Album) then) =
       _$AlbumCopyWithImpl<$Res, Album>;
   @useResult
-  $Res call({int id, String uuid, String title, String description, int year});
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
+      String title,
+      String description,
+      int year,
+      @JsonKey(toJson: profileToJson) Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
+
+  $ProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -57,6 +72,8 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
     Object? title = null,
     Object? description = null,
     Object? year = null,
+    Object? profile = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -79,7 +96,23 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as int,
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res> get profile {
+    return $ProfileCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value) as $Val);
+    });
   }
 }
 
@@ -89,7 +122,17 @@ abstract class _$$_AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       __$$_AlbumCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String uuid, String title, String description, int year});
+  $Res call(
+      {@JsonKey(includeToJson: false) int id,
+      @JsonKey(includeToJson: false) String uuid,
+      String title,
+      String description,
+      int year,
+      @JsonKey(toJson: profileToJson) Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
+
+  @override
+  $ProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -106,6 +149,8 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
     Object? title = null,
     Object? description = null,
     Object? year = null,
+    Object? profile = null,
+    Object? createdAt = null,
   }) {
     return _then(_$_Album(
       id: null == id
@@ -128,6 +173,14 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as int,
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -136,19 +189,24 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
 @JsonSerializable()
 class _$_Album extends _Album {
   _$_Album(
-      {required this.id,
-      required this.uuid,
+      {@JsonKey(includeToJson: false) required this.id,
+      @JsonKey(includeToJson: false) required this.uuid,
       required this.title,
       required this.description,
-      required this.year})
+      required this.year,
+      @JsonKey(toJson: profileToJson) required this.profile,
+      @JsonKey(name: "created_at", includeToJson: false)
+      required this.createdAt})
       : super._();
 
   factory _$_Album.fromJson(Map<String, dynamic> json) =>
       _$$_AlbumFromJson(json);
 
   @override
+  @JsonKey(includeToJson: false)
   final int id;
   @override
+  @JsonKey(includeToJson: false)
   final String uuid;
   @override
   final String title;
@@ -156,10 +214,16 @@ class _$_Album extends _Album {
   final String description;
   @override
   final int year;
+  @override
+  @JsonKey(toJson: profileToJson)
+  final Profile profile;
+  @override
+  @JsonKey(name: "created_at", includeToJson: false)
+  final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Album(id: $id, uuid: $uuid, title: $title, description: $description, year: $year)';
+    return 'Album(id: $id, uuid: $uuid, title: $title, description: $description, year: $year, profile: $profile, createdAt: $createdAt)';
   }
 
   @override
@@ -172,13 +236,16 @@ class _$_Album extends _Album {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.year, year) || other.year == year));
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, uuid, title, description, year);
+  int get hashCode => Object.hash(
+      runtimeType, id, uuid, title, description, year, profile, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -196,18 +263,23 @@ class _$_Album extends _Album {
 
 abstract class _Album extends Album {
   factory _Album(
-      {required final int id,
-      required final String uuid,
+      {@JsonKey(includeToJson: false) required final int id,
+      @JsonKey(includeToJson: false) required final String uuid,
       required final String title,
       required final String description,
-      required final int year}) = _$_Album;
+      required final int year,
+      @JsonKey(toJson: profileToJson) required final Profile profile,
+      @JsonKey(name: "created_at", includeToJson: false)
+      required final DateTime createdAt}) = _$_Album;
   _Album._() : super._();
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$_Album.fromJson;
 
   @override
+  @JsonKey(includeToJson: false)
   int get id;
   @override
+  @JsonKey(includeToJson: false)
   String get uuid;
   @override
   String get title;
@@ -215,6 +287,12 @@ abstract class _Album extends Album {
   String get description;
   @override
   int get year;
+  @override
+  @JsonKey(toJson: profileToJson)
+  Profile get profile;
+  @override
+  @JsonKey(name: "created_at", includeToJson: false)
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$_AlbumCopyWith<_$_Album> get copyWith =>
