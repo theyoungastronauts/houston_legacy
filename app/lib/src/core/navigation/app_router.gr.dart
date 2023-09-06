@@ -15,43 +15,6 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    AlbumRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AlbumContainer(),
-      );
-    },
-    AlbumDetailRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<AlbumDetailRouteArgs>(
-          orElse: () =>
-              AlbumDetailRouteArgs(uuid: pathParams.getString('uuid')));
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: AlbumDetailScreen(
-          key: args.key,
-          uuid: args.uuid,
-        ),
-      );
-    },
-    AlbumEditRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<AlbumEditRouteArgs>(
-          orElse: () => AlbumEditRouteArgs(uuid: pathParams.getString('uuid')));
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: AlbumEditScreen(
-          key: args.key,
-          uuid: args.uuid,
-        ),
-      );
-    },
-    AlbumListRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AlbumListScreen(),
-      );
-    },
     DashboardRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -105,6 +68,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const FoodListScreen(),
+      );
+    },
+    HoustonDashboardRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const HoustonDashboardContainer(),
       );
     },
     LandingRoute.name: (routeData) {
@@ -170,112 +139,6 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [AlbumContainer]
-class AlbumRoute extends PageRouteInfo<void> {
-  const AlbumRoute({List<PageRouteInfo>? children})
-      : super(
-          AlbumRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AlbumRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [AlbumDetailScreen]
-class AlbumDetailRoute extends PageRouteInfo<AlbumDetailRouteArgs> {
-  AlbumDetailRoute({
-    Key? key,
-    required String uuid,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AlbumDetailRoute.name,
-          args: AlbumDetailRouteArgs(
-            key: key,
-            uuid: uuid,
-          ),
-          rawPathParams: {'uuid': uuid},
-          initialChildren: children,
-        );
-
-  static const String name = 'AlbumDetailRoute';
-
-  static const PageInfo<AlbumDetailRouteArgs> page =
-      PageInfo<AlbumDetailRouteArgs>(name);
-}
-
-class AlbumDetailRouteArgs {
-  const AlbumDetailRouteArgs({
-    this.key,
-    required this.uuid,
-  });
-
-  final Key? key;
-
-  final String uuid;
-
-  @override
-  String toString() {
-    return 'AlbumDetailRouteArgs{key: $key, uuid: $uuid}';
-  }
-}
-
-/// generated route for
-/// [AlbumEditScreen]
-class AlbumEditRoute extends PageRouteInfo<AlbumEditRouteArgs> {
-  AlbumEditRoute({
-    Key? key,
-    required String uuid,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AlbumEditRoute.name,
-          args: AlbumEditRouteArgs(
-            key: key,
-            uuid: uuid,
-          ),
-          rawPathParams: {'uuid': uuid},
-          initialChildren: children,
-        );
-
-  static const String name = 'AlbumEditRoute';
-
-  static const PageInfo<AlbumEditRouteArgs> page =
-      PageInfo<AlbumEditRouteArgs>(name);
-}
-
-class AlbumEditRouteArgs {
-  const AlbumEditRouteArgs({
-    this.key,
-    required this.uuid,
-  });
-
-  final Key? key;
-
-  final String uuid;
-
-  @override
-  String toString() {
-    return 'AlbumEditRouteArgs{key: $key, uuid: $uuid}';
-  }
-}
-
-/// generated route for
-/// [AlbumListScreen]
-class AlbumListRoute extends PageRouteInfo<void> {
-  const AlbumListRoute({List<PageRouteInfo>? children})
-      : super(
-          AlbumListRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AlbumListRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -422,6 +285,20 @@ class FoodListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'FoodListRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HoustonDashboardContainer]
+class HoustonDashboardRoute extends PageRouteInfo<void> {
+  const HoustonDashboardRoute({List<PageRouteInfo>? children})
+      : super(
+          HoustonDashboardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HoustonDashboardRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

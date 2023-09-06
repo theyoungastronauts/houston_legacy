@@ -8,13 +8,46 @@ import 'package:cli/utils.dart';
 import 'package:dcli/dcli.dart';
 
 Future<void> main(List<String> args) async {
-  await scaffoldFeature("food");
-  await scaffoldFeature("album");
-  await scaffoldFeature("profile");
+  scaffoldFeature(name: "track", runPostGenerator: false);
+  return;
+  for (;;) {
+    final line = ask('${green('houston')}${blue('::')}');
+    if (line.isNotEmpty) {
+      await evaluate(line);
+    }
+  }
+}
 
-  print(white("Running generate function in flutter project..."));
+Future<void> evaluate(String command) async {
+  final parts = command.split(' ');
+  switch (parts[0]) {
+    case 'help':
+      await showHelp();
+      break;
+    case 'new':
+      await newFeature();
+      break;
+    case 'scaffold':
+      await scaffoldFeature();
+      break;
+    case 'exit':
+      print(white("Chat soon!"));
+      io.exit(0);
+    default:
+      if (which(parts[0]).found) {
+        command.start(nothrow: true, progress: Progress.print());
+      } else {
+        print(red('Unknown command: ${parts[0]}'));
+      }
+      break;
+  }
+}
 
-  final args = "packages pub run build_runner build --delete-conflicting-outputs".split(" ");
-  final process = await io.Process.start("flutter", args, workingDirectory: appDir());
-  await process.stdout.transform(utf8.decoder).forEach((line) => print(yellow(line)));
+Future<void> showHelp() async {
+  print(white("Houston Help"));
+  print(white("------------"));
+  print("help\t\tShow this help text");
+  print("new\t\tGenerate the blueprint file for a new feature");
+  print("scaffold\tScaffold out the code for an existing blueprint");
+  print("exit\t\tClose the Houston CLI");
 }

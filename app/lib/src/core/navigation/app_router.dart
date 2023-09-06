@@ -1,10 +1,9 @@
-import 'package:app/src/feature/album/routes.dart';
 import 'package:app/src/feature/profile/routes.dart';
+import 'package:app/src/feature/food/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:app/src/core/navigation/dashboard_container.dart';
 import 'package:app/src/core/navigation/empty_route.dart';
 import 'package:app/src/core/screens/landing_screen.dart';
-import 'package:app/src/feature/food/routes.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:app/src/feature/auth/screens/login_screen.dart';
 import 'package:app/src/feature/auth/screens/register_screen.dart';
@@ -33,8 +32,8 @@ final dashboardRouter = AutoRoute(
   page: DashboardRoute.page,
   children: [
     RedirectRoute(path: "", redirectTo: "/food"),
-    foodRoutes,
-    albumRoutes,
     profileRoutes,
+    foodRoutes,
+    //::HOUSTON_INSERT_ROUTE::
   ],
 );

@@ -83,12 +83,11 @@ class AppTheme {
     return AppTheme(
       themeData: ThemeData(
         useMaterial3: true,
-        colorScheme: _primaryColor != null
-            ? ColorScheme.fromSeed(
-                seedColor: _primaryColor,
-                brightness: Brightness.light,
-              )
-            : const ColorScheme.light(),
+        dialogTheme: const DialogTheme(titleTextStyle: TextStyle(fontSize: 16)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: _primaryColor,
+          brightness: Brightness.light,
+        ),
       ),
     );
   }
@@ -97,12 +96,11 @@ class AppTheme {
     return AppTheme(
       themeData: ThemeData(
         useMaterial3: true,
-        colorScheme: _primaryColor != null
-            ? ColorScheme.fromSeed(
-                seedColor: _primaryColor,
-                brightness: Brightness.dark,
-              )
-            : const ColorScheme.dark(),
+        dialogTheme: const DialogTheme(titleTextStyle: TextStyle(fontSize: 16)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: _primaryColor,
+          brightness: Brightness.dark,
+        ),
       ),
     );
   }

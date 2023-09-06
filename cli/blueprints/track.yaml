@@ -1,0 +1,9 @@
+name: track
+properties:
+  -
+    name: title
+    type: char
+    ui_heading: 1
+  -
+    name: artist
+    type: char

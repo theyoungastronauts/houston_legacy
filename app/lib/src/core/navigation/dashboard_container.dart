@@ -7,98 +7,41 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+part 'houston_dashboard_container.dart';
+
 @RoutePage()
-class DashboardContainer extends BaseComponent {
-  const DashboardContainer({Key? key}) : super(key: key);
+class DashboardContainer extends HoustonDashboardContainer {
+  const DashboardContainer({super.key});
 
-  static const List<PageRouteInfo> routes = [
-    FoodRoute(),
-    AlbumRoute(),
-  ];
+  @override
+  List<PageRouteInfo> get routes => [
+        const FoodRoute(),
+        //::HOUSTON_INSERT_ROUTE::
+      ];
 
-  void onPressed(TabsRouter tabsRouter, index) {
-    if (index == tabsRouter.activeIndex) {
-      tabsRouter.stackRouterOfIndex(tabsRouter.activeIndex)!.popUntilRoot();
-    } else {
-      tabsRouter.setActiveIndex(index);
-    }
+  @override
+  List<BottomNavigationBarItem> tabs(BuildContext context, WidgetRef ref) {
+    return const [
+      BottomNavigationBarItem(
+        label: "Food",
+        icon: Icon(Icons.home),
+      ),
+      //::HOUSTON_INSERT_TAB::
+    ];
   }
 
   @override
-  Widget body(BuildContext context, WidgetRef ref) {
-    return AutoTabsScaffold(
-      routes: routes,
-      bottomNavigationBuilder: (_, tabsRouter) {
-        return BottomNavigationBar(
-          currentIndex: tabsRouter.activeIndex,
-          onTap: (index) {
-            onPressed(tabsRouter, index);
-          },
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(
-              label: "Food",
-              icon: Icon(Icons.home),
-            ),
-            BottomNavigationBarItem(
-              label: "Albums",
-              icon: Icon(Icons.article),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  Widget bodyMd(BuildContext context, WidgetRef ref) {
-    return AutoTabsScaffold(
-      routes: routes,
-      appBarBuilder: (_, tabsRouter) {
-        return PreferredSize(
-          preferredSize: const Size.fromHeight(48),
-          child: Container(
-            height: 48,
-            width: double.infinity,
-            color: Colors.black38,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 32,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AppButton(
-                          label: "Food",
-                          type: AppButtonType.Text,
-                          variant: tabsRouter.activeIndex == 0 ? AppColorVariant.primary : AppColorVariant.light,
-                          onPressed: () {
-                            onPressed(tabsRouter, 0);
-                          },
-                        ),
-                        AppButton(
-                          label: "Albums",
-                          type: AppButtonType.Text,
-                          variant: tabsRouter.activeIndex == 1 ? AppColorVariant.primary : AppColorVariant.light,
-                          onPressed: () {
-                            onPressed(tabsRouter, 1);
-                          },
-                        ),
-                      ],
-                    ),
-                    const AuthDropdown(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+  List<Widget> topNav(BuildContext context, WidgetRef ref, TabsRouter tabsRouter) {
+    return [
+      AppButton(
+        label: "Food",
+        type: AppButtonType.Text,
+        variant: tabsRouter.activeIndex == 0 ? AppColorVariant.primary : AppColorVariant.light,
+        onPressed: () {
+          onPressed(tabsRouter, 0);
+        },
+      ),
+      //::HOUSTON_INSERT_NAV::
+    ];
   }
 }

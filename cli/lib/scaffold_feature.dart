@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,36 +9,39 @@ import 'package:cli/validators.dart';
 import 'package:dcli/dcli.dart';
 import 'package:mason/mason.dart' as mason;
 
-// Future<void> newFeature() async {
-//   String moduleName = ask(
-//     "Module Name:",
-//     required: true,
-//     validator: FeatureNameValidator(),
-//   );
-//   moduleName = snakeCase(moduleName);
+const ROUTER_ROUTE_INSERT_TOKEN = "//::HOUSTON_INSERT_ROUTE::";
+const DASHBOARD_ROUTE_INSERT_TOKEN = "//::HOUSTON_INSERT_ROUTE::";
+const DASHBOARD_TAB_INSERT_TOKEN = "//::HOUSTON_INSERT_TAB::";
+const DASHBOARD_NAV_INSERT_TOKEN = "//::HOUSTON_INSERT_NAV::";
 
-//   String name = ask(
-//     "Feature Name:",
-//     required: true,
-//     validator: FeatureNameValidator(),
-//   );
-//   name = snakeCase(name);
+Future<void> newFeature() async {
+  String name = ask(
+    "Feature Name:",
+    required: true,
+    validator: FeatureNameValidator(),
+  );
+  name = snakeCase(name);
 
-//   final dir = blueprintsDir();
-//   final path = "$dir/$name.yaml";
+  final dir = blueprintsDir();
+  final path = "$dir/$name.yaml";
 
-//   if (File(path).existsSync()) {
-//     return print(red('Blueprint already exists.'));
-//   }
+  if (File(path).existsSync()) {
+    return print(red('Blueprint already exists at $path. Make your edits then run `scaffold`.'));
+  }
 
-//   File(path).createSync();
+  File(path).createSync();
 
-//   final contents = "name: $name\nmodule: $moduleName\nproperties:";
+  final contents = "name: $name\nproperties:";
 
-//   await setTextInFile(path: path, value: contents);
-// }
+  await setTextInFile(path: path, value: contents);
 
-Future<void> scaffoldFeature([String? name]) async {
+  print(white("New file generated at $path. Make your edits then run `scaffold`."));
+}
+
+Future<void> scaffoldFeature({
+  String? name,
+  bool runPostGenerator = true,
+}) async {
   name ??= ask(
     "Feature Name:",
     required: true,
@@ -50,7 +55,7 @@ Future<void> scaffoldFeature([String? name]) async {
   print(path);
 
   if (!File(path).existsSync()) {
-    return print(red('Feature $name not found.'));
+    return print(red('Feature $name not found. Try creating it first'));
   }
   final blueprint = parseBlueprint(path);
 
@@ -76,6 +81,46 @@ Future<void> scaffoldFeature([String? name]) async {
     vars: blueprint.serialize(),
   );
 
+  // update app_router.dart
+  final routerPath = "${appModuleDirectory()}/src/core/navigation/app_router.dart";
+
+  await insertTextInFile(
+    path: routerPath,
+    value: "import 'package:app/src/feature/${snakeCase(name)}/routes.dart';",
+    prepend: true,
+  );
+
+  await insertTextInFileAtToken(
+    path: routerPath,
+    token: ROUTER_ROUTE_INSERT_TOKEN,
+    value: "${camelCase(name)}Routes,",
+  );
+
+  // update dashboard_container.dart
+  final dashboardPath = "${appModuleDirectory()}/src/core/navigation/dashboard_container.dart";
+
+  final currentRouteCount = await countSpecificStringInFile(path: dashboardPath, search: "Route(),");
+
+  await insertTextInFileAtToken(
+    path: dashboardPath,
+    token: DASHBOARD_ROUTE_INSERT_TOKEN,
+    value: "const ${pascalCase(name)}Route(),",
+  );
+
+  await insertTextInFileAtToken(
+    path: dashboardPath,
+    token: DASHBOARD_TAB_INSERT_TOKEN,
+    value: 'BottomNavigationBarItem(label: "${pascalCase(name)}", icon: Icon(Icons.star),),',
+  );
+
+  await insertTextInFileAtToken(
+    path: dashboardPath,
+    token: DASHBOARD_NAV_INSERT_TOKEN,
+    value:
+        'AppButton(label: "${pascalCase(name)}",type: AppButtonType.Text, variant: tabsRouter.activeIndex == $currentRouteCount ? AppColorVariant.primary : AppColorVariant.light, onPressed: () { onPressed(tabsRouter, $currentRouteCount);},),',
+  );
+
+  print("Formatting files");
   final filePaths = [
     "$appGeneratedPath/components/${name}_card.dart",
     "$appGeneratedPath/components/${name}_form.dart",
@@ -90,6 +135,8 @@ Future<void> scaffoldFeature([String? name]) async {
     "$appGeneratedPath/services/${name}_rest_service.dart",
     "$appGeneratedPath/services/${name}_db_service.dart",
     "$appGeneratedPath/routes.dart",
+    routerPath,
+    dashboardPath,
   ];
 
   for (final filePath in filePaths) {
@@ -98,4 +145,11 @@ Future<void> scaffoldFeature([String? name]) async {
   }
 
   print(green("$name app generated in $appGeneratedPath"));
+  if (runPostGenerator) {
+    print(white("Running generate function in flutter project..."));
+
+    final args = "packages pub run build_runner build --delete-conflicting-outputs".split(" ");
+    final process = await Process.start("flutter", args, workingDirectory: appDir());
+    await process.stdout.transform(utf8.decoder).forEach((line) => print(yellow(line)));
+  }
 }

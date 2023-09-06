@@ -65,6 +65,7 @@ Future<void> insertTextInFile({
   required String value,
   String spacer = "\n",
   bool preventDuplicates = true,
+  bool prepend = false,
 }) async {
   final f = File(path);
   final text = await f.readAsString();
@@ -76,7 +77,11 @@ Future<void> insertTextInFile({
     return;
   }
 
-  await f.writeAsString("$text$spacer$value");
+  if (prepend) {
+    await f.writeAsString("$value$spacer$text");
+  } else {
+    await f.writeAsString("$text$spacer$value");
+  }
 }
 
 Future<void> insertTextInFileAtToken({
@@ -98,4 +103,27 @@ Future<void> insertTextInFileAtToken({
 
   text = text.replaceAll(token, newLine);
   await f.writeAsString(text);
+}
+
+Future<int> countSpecificStringInFile({required String path, required String search}) async {
+  final f = File(path);
+  String text = await f.readAsString();
+
+  return _countOccurrences(text, search);
+}
+
+int _countOccurrences(String text, String search) {
+  int count = 0;
+  int index = 0;
+
+  while (true) {
+    index = text.indexOf(search, index);
+    if (index == -1) {
+      break;
+    }
+    count++;
+    index += search.length;
+  }
+
+  return count;
 }
