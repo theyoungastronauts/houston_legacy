@@ -16,6 +16,7 @@ class DashboardContainer extends HoustonDashboardContainer {
   @override
   List<PageRouteInfo> get routes => [
         const FoodRoute(),
+        const AlbumRoute(),
         //::HOUSTON_INSERT_ROUTE::
       ];
 
@@ -26,6 +27,7 @@ class DashboardContainer extends HoustonDashboardContainer {
         label: "Food",
         icon: Icon(Icons.home),
       ),
+
       BottomNavigationBarItem(
         label: "Album",
         icon: Icon(Icons.star),
@@ -43,6 +45,14 @@ class DashboardContainer extends HoustonDashboardContainer {
         variant: tabsRouter.activeIndex == 0 ? AppColorVariant.primary : AppColorVariant.light,
         onPressed: () {
           onPressed(tabsRouter, 0);
+        },
+      ),
+      AppButton(
+        label: "Album",
+        type: AppButtonType.Text,
+        variant: tabsRouter.activeIndex == 1 ? AppColorVariant.primary : AppColorVariant.light,
+        onPressed: () {
+          onPressed(tabsRouter, 1);
         },
       ),
       //::HOUSTON_INSERT_NAV::

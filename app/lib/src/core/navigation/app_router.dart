@@ -1,3 +1,4 @@
+import 'package:app/src/feature/album/routes.dart';
 import 'package:app/src/feature/profile/routes.dart';
 import 'package:app/src/feature/food/routes.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ final dashboardRouter = AutoRoute(
     RedirectRoute(path: "", redirectTo: "/food"),
     profileRoutes,
     foodRoutes,
+    albumRoutes,
     //::HOUSTON_INSERT_ROUTE::
   ],
 );

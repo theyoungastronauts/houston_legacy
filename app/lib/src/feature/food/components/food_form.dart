@@ -13,8 +13,7 @@ class FoodForm extends HoustonFoodForm {
   const FoodForm({super.key, required super.uuid});
 
   @override
-  List<Widget> fields(BuildContext context, WidgetRef ref,
-      FoodFormProvider provider, Food model) {
+  List<Widget> fields(BuildContext context, WidgetRef ref, FoodFormProvider provider, Food model) {
     return [
       TextFormField(
         controller: provider.nameController,
