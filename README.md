@@ -17,16 +17,19 @@ Backend: supabase
 Singletons: get_it
 ```
 
+### Getting Started
+1. Create a [supabase](https://supabase.com) account 
+2. Update assets/env/develop_env with the correct project / public key
+3. Run the SQL table generation 
+    - profile required
+    - album/food/etc => only if you want to use those features
+4. Execute the `cli/database/user_create.plpgsql` file => this will automatically create a trigger that fires when a new user is created to create a profile for them.
+5. run `flutter pub get` in the app folder
+6. Launch the app!
+
 ### Generating Code
 Using the cli, you run the command `new` and type in the name of the model you want to create. This will create a .yaml file where you can add the fields your model will include.
 
 Next, run the command `scaffold` in the cli and Houston will generate the boilerplate code for that feature, create the neccissary imports, and then invoke the build runner to initialize the auto generated code. Phew!
 
-### Getting Started
-1. Create a superbase account
-2. Update assets/env/develop_env with the correct project / public key
-3. Run the SQL table generation (profile required | album/food/etc: only if you want to use those features)
-4. Execute the `cli/database/user_create.plpgsql` file => this will automatically create a trigger that fires when a new user is created to create a profile for them.
-5. Run the app!
-
-
+There are a few supported types but this isn't very well documented yet. See the existing blueprints for an example or dig into the cli code!
