@@ -26,6 +26,10 @@ class DashboardContainer extends HoustonDashboardContainer {
         label: "Food",
         icon: Icon(Icons.home),
       ),
+      BottomNavigationBarItem(
+        label: "Album",
+        icon: Icon(Icons.star),
+      ),
       //::HOUSTON_INSERT_TAB::
     ];
   }
