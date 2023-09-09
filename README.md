@@ -22,6 +22,11 @@ Using the cli, you run the command `new` and type in the name of the model you w
 
 Next, run the command `scaffold` in the cli and Houston will generate the boilerplate code for that feature, create the neccissary imports, and then invoke the build runner to initialize the auto generated code. Phew!
 
-### Features
+### Getting Started
+1. Create a superbase account
+2. Update assets/env/develop_env with the correct project / public key
+3. Run the SQL table generation (profile required | album/food/etc: only if you want to use those features)
+4. Execute the `cli/database/user_create.plpgsql` file => this will automatically create a trigger that fires when a new user is created to create a profile for them.
+5. Run the app!
 
 
