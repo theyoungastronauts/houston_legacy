@@ -62,7 +62,6 @@ class FoodFormActions extends BaseComponent {
                     final success = await provider.submit();
                     if (success == true) {
                       context.pop();
-
                       Toast.message("Food saved successfully!");
                     }
                   },

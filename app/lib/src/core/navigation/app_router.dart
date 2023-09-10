@@ -1,3 +1,4 @@
+import 'package:app/src/feature/album/routes.dart';
 import 'package:app/src/core/app.dart';
 import 'package:app/src/core/navigation/dashboard_container.dart';
 import 'package:app/src/core/screens/landing_screen.dart';
@@ -36,6 +37,8 @@ final appRouter = GoRouter(
       branches: [
         FoodRoutes.branch,
         ProfileRoutes.branch,
+        AlbumRoutes.branch,
+        //::HOUSTON_INSERT_ROUTE::
       ],
     )
   ],

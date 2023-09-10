@@ -52,6 +52,12 @@ BluePrint parseBlueprint(String path) {
   return BluePrint.fromYaml(yaml);
 }
 
+bool _textExists(String fileContents, String lookup) {
+  fileContents = fileContents.replaceAll("\n", "").replaceAll(" ", "");
+  lookup = lookup.replaceAll("\n", "").replaceAll(" ", "");
+  return fileContents.contains(lookup);
+}
+
 Future<void> setTextInFile({
   required String path,
   required String value,
@@ -73,7 +79,7 @@ Future<void> insertTextInFile({
     spacer = "";
   }
 
-  if (preventDuplicates && text.contains(value)) {
+  if (preventDuplicates && _textExists(text, value)) {
     return;
   }
 
@@ -93,7 +99,7 @@ Future<void> insertTextInFileAtToken({
   final f = File(path);
   String text = await f.readAsString();
 
-  if (preventDuplicates && text.contains(value)) {
+  if (preventDuplicates && _textExists(text, value)) {
     print(orange("text already exists in file"));
     return;
   }

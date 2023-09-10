@@ -1,44 +1,29 @@
-import 'package:app/src/core/components/base_component.dart';
 import 'package:flutter/material.dart';
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-export './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_list_screen.dart';
-export './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_detail_screen.dart';
-export './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_edit_screen.dart';
+import './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_list_screen.dart';
+import './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_detail_screen.dart';
+import './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_edit_screen.dart';
 
 
-@RoutePage()
-class {{#pascalCase}}{{name}}{{/pascalCase}}Container extends BaseComponent {
-  const {{#pascalCase}}{{name}}{{/pascalCase}}Container({super.key});
+class {{#pascalCase}}{{name}}{{/pascalCase}}Routes {
+  static const String namespace = "{{#paramCase}}{{name}}{{/paramCase}}";
+  static final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "{{#pascalCase}}{{name}}{{/pascalCase}} Shell");
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const AutoRouter();
-  }
-}
-
-AutoRoute get {{#camelCase}}{{name}}{{/camelCase}}Routes {
-  return AutoRoute(
-    path: "{{#paramCase}}{{name}}{{/paramCase}}",
-    page: {{#pascalCase}}{{name}}{{/pascalCase}}Route.page,
-    children: [
-      AutoRoute(
-        path: "",
-        page: {{#pascalCase}}{{name}}{{/pascalCase}}ListRoute.page,
+   static StatefulShellBranch branch = StatefulShellBranch(
+    navigatorKey: shellNavigatorKey,
+    routes: [
+      GoRoute(
+        path: namespace,
+        builder: (context, state) => const {{#pascalCase}}{{name}}{{/pascalCase}}ListScreen(),
       ),
-      AutoRoute(
-        path: ":uuid",
-        page: {{#pascalCase}}{{name}}{{/pascalCase}}DetailRoute.page,
+      GoRoute(
+        path: "$namespace/:uuid",
+        builder: (context, state) => {{#pascalCase}}{{name}}{{/pascalCase}}DetailScreen(uuid: state.pathParameters['uuid']!),
       ),
-      AutoRoute(
-        path: "create",
-        page: {{#pascalCase}}{{name}}{{/pascalCase}}EditRoute.page,
-      ),
-      AutoRoute(
-        path: "edit/:uuid",
-        page: {{#pascalCase}}{{name}}{{/pascalCase}}EditRoute.page,
+      GoRoute(
+        path: "$namespace/edit/:uuid",
+        builder: (context, state) => {{#pascalCase}}{{name}}{{/pascalCase}}EditScreen(uuid: state.pathParameters['uuid']!),
       ),
     ],
   );

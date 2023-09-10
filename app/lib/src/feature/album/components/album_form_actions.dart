@@ -6,20 +6,20 @@ import '../../../config/theme.dart';
 import '../../../core/utils/toast.dart';
 import '../../../core/components/base_component.dart';
 import '../../../core/components/buttons.dart';
-import '../providers/{{#snakeCase}}{{name}}{{/snakeCase}}_form_provider.dart';
+import '../providers/album_form_provider.dart';
 
 
-class {{#pascalCase}}{{name}}{{/pascalCase}}FormActions extends BaseComponent {
+class AlbumFormActions extends BaseComponent {
   final String uuid;
-  const {{#pascalCase}}{{name}}{{/pascalCase}}FormActions({
+  const AlbumFormActions({
     super.key,
     required this.uuid,
   });
 
   @override
   Widget body(BuildContext context, WidgetRef ref) {
-    final provider = ref.read({{#camelCase}}{{name}}{{/camelCase}}FormProvider(uuid).notifier);
-    final model = ref.watch({{#camelCase}}{{name}}{{/camelCase}}FormProvider(uuid));
+    final provider = ref.read(albumFormProvider(uuid).notifier);
+    final model = ref.watch(albumFormProvider(uuid));
 
     return Container(
       color: Colors.black38,
@@ -63,7 +63,7 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}FormActions extends BaseComponent {
                     final success = await provider.submit();
                     if(success == true){
                       context.pop();
-                      Toast.message("{{#titleCase}}{{name}}{{/titleCase}} saved successfully!");
+                      Toast.message("Album saved successfully!");
                     }
 
                   },

@@ -1,12 +1,9 @@
-import 'package:app/src/feature/food/screens/food_detail_screen.dart';
-import 'package:app/src/feature/food/screens/food_edit_screen.dart';
-import 'package:app/src/feature/food/screens/food_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-export './screens/food_list_screen.dart';
-export './screens/food_detail_screen.dart';
-export './screens/food_edit_screen.dart';
+import './screens/food_list_screen.dart';
+import './screens/food_detail_screen.dart';
+import './screens/food_edit_screen.dart';
 
 class FoodRoutes {
   static const String namespace = "/food";

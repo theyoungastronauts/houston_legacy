@@ -1,6 +1,5 @@
 import 'package:app/src/core/components/base_component.dart';
 import 'package:app/src/core/navigation/main_drawer.dart';
-import 'package:app/src/feature/auth/components/auth_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +18,8 @@ class DashboardContainer extends BaseComponent {
         NavigationBar(
           selectedIndex: navigationShell.currentIndex,
           onDestinationSelected: (index) {
-            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+            navigationShell.goBranch(index,
+                initialLocation: index == navigationShell.currentIndex);
           },
           destinations: const [
             NavigationDestination(
@@ -29,7 +29,12 @@ class DashboardContainer extends BaseComponent {
             NavigationDestination(
               icon: Icon(Icons.people),
               label: "Profiles",
-            )
+            ),
+            NavigationDestination(
+              label: "Album",
+              icon: Icon(Icons.star),
+            ),
+            //::HOUSTON_INSERT_TAB::
           ],
         ),
       ],
@@ -64,10 +69,16 @@ class DashboardContainer extends BaseComponent {
                     NavigationRailDestination(
                       icon: Icon(Icons.people),
                       label: Text("Profiles"),
-                    )
+                    ),
+                    NavigationRailDestination(
+                      label: Text("Album"),
+                      icon: Icon(Icons.star),
+                    ),
+                    //::HOUSTON_INSERT_NAV::
                   ],
                   onDestinationSelected: (index) {
-                    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+                    navigationShell.goBranch(index,
+                        initialLocation: index == navigationShell.currentIndex);
                   },
                 ),
               ),
