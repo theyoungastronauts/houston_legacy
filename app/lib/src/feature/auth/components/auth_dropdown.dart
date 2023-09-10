@@ -23,7 +23,7 @@ class AuthDropdown extends BaseComponent {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  user.email ?? "Me",
+                  "My Account",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),

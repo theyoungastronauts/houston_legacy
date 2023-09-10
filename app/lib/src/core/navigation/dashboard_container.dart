@@ -10,37 +10,63 @@ class DashboardContainer extends BaseComponent {
 
   @override
   Widget body(BuildContext context, WidgetRef ref) {
-    return Material(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text("Houston"),
-                    TextButton(
-                      onPressed: () {
-                        navigationShell.goBranch(0, initialLocation: navigationShell.currentIndex == 0);
-                      },
-                      child: Text("Food"),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        navigationShell.goBranch(1, initialLocation: navigationShell.currentIndex == 0);
-                      },
-                      child: Text("Profile"),
-                    ),
-                  ],
-                ),
-                AuthDropdown(),
-              ],
+    // TODO: implement body
+    return Column(
+      children: [
+        Expanded(
+          child: navigationShell,
+        ),
+        NavigationBar(
+          selectedIndex: navigationShell.currentIndex,
+          onDestinationSelected: (index) {
+            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.food_bank),
+              label: "Food",
             ),
+            NavigationDestination(
+              icon: Icon(Icons.people),
+              label: "Profiles",
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget bodyMd(BuildContext context, WidgetRef ref) {
+    return Material(
+      child: Row(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                child: NavigationRail(
+                  selectedIndex: navigationShell.currentIndex,
+                  labelType: NavigationRailLabelType.all,
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.food_bank),
+                      label: Text("Food"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.people),
+                      label: Text("Profiles"),
+                    )
+                  ],
+                  onDestinationSelected: (index) {
+                    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+                  },
+                ),
+              ),
+              const AuthDropdown(),
+            ],
           ),
-          Expanded(child: navigationShell),
+          const VerticalDivider(),
+          Expanded(child: navigationShell)
         ],
       ),
     );
