@@ -4,7 +4,6 @@ import 'package:app/src/config/env.dart';
 import 'package:app/src/core/app.dart';
 import 'package:app/src/core/models/app_session.dart';
 import 'package:app/src/core/navigation/app_router.dart';
-import 'package:app/src/core/singletons/singletons.dart';
 import 'package:app/src/core/utils/toast.dart';
 import 'package:app/src/core/utils/validation.dart';
 import 'package:app/src/feature/auth/services/user_service.dart';
@@ -23,7 +22,7 @@ class SessionProvider extends StateNotifier<AppSession> {
   }
 
   init() {
-    final session = singleton<SupabaseClient>().auth.currentSession;
+    final session = Supabase.instance.client.auth.currentSession;
 
     state = state.copyWith(ready: true, session: session);
 
@@ -35,7 +34,7 @@ class SessionProvider extends StateNotifier<AppSession> {
   }
 
   void addAuthStateChangeListener() {
-    authStateSubscription = singleton<SupabaseClient>().auth.onAuthStateChange.listen((data) async {
+    authStateSubscription = Supabase.instance.client.auth.onAuthStateChange.listen((data) async {
       if (data.event == AuthChangeEvent.signedIn) {
         if (state.redirecting) return;
 
@@ -54,7 +53,7 @@ class SessionProvider extends StateNotifier<AppSession> {
         return;
       }
       if (data.event == AuthChangeEvent.userUpdated) {
-        singleton<SupabaseClient>().auth.refreshSession();
+        Supabase.instance.client.auth.refreshSession();
         return;
       }
       if (data.event == AuthChangeEvent.tokenRefreshed) {
@@ -69,11 +68,11 @@ class SessionProvider extends StateNotifier<AppSession> {
 
   Future<bool> loginWithOtp(String email) async {
     try {
-      await singleton<SupabaseClient>().auth.signInWithOtp(
-            email: email,
-            emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
-            shouldCreateUser: false,
-          );
+      await Supabase.instance.client.auth.signInWithOtp(
+        email: email,
+        emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
+        shouldCreateUser: false,
+      );
       Toast.message("Check your email!");
       return true;
     } on AuthException catch (e) {
@@ -87,10 +86,10 @@ class SessionProvider extends StateNotifier<AppSession> {
 
   Future<bool> loginWithPassword(String email, String password) async {
     try {
-      final response = await singleton<SupabaseClient>().auth.signInWithPassword(
-            email: email,
-            password: password,
-          );
+      final response = await Supabase.instance.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
       if (response.session != null) {
         final profile = await ProfileDbService().retrieve(uuid: response.session!.user.id);
 
@@ -108,11 +107,11 @@ class SessionProvider extends StateNotifier<AppSession> {
 
   Future<bool> register(String email, String password) async {
     try {
-      await singleton<SupabaseClient>().auth.signUp(
-            email: email,
-            password: password,
-            emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
-          );
+      await Supabase.instance.client.auth.signUp(
+        email: email,
+        password: password,
+        emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
+      );
       Toast.message("Check your email!");
       return true;
     } on AuthException catch (e) {
@@ -125,7 +124,7 @@ class SessionProvider extends StateNotifier<AppSession> {
   }
 
   Future<void> logout() async {
-    await singleton<SupabaseClient>().auth.signOut();
+    await Supabase.instance.client.auth.signOut();
     state = state.copyWith(session: null, profile: null);
     final context = rootNavigatorKey.currentContext!;
     context.replace('/');
@@ -172,8 +171,5 @@ class SessionProvider extends StateNotifier<AppSession> {
 }
 
 final sessionProvider = StateNotifierProvider<SessionProvider, AppSession>(
-  (ref) => SessionProvider(
-    ref,
-    AppSession(),
-  ),
+  (ref) => SessionProvider(ref, AppSession()),
 );

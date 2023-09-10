@@ -8,6 +8,7 @@ import '../../../core/components/base_component.dart';
 import '../../../core/components/buttons.dart';
 import '../providers/food_form_provider.dart';
 
+
 class FoodFormActions extends BaseComponent {
   final String uuid;
   const FoodFormActions({
@@ -60,10 +61,11 @@ class FoodFormActions extends BaseComponent {
                   variant: AppColorVariant.success,
                   onPressed: () async {
                     final success = await provider.submit();
-                    if (success == true) {
+                    if(success == true){
                       context.pop();
                       Toast.message("Food saved successfully!");
                     }
+
                   },
                 ),
               ],

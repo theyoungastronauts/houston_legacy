@@ -19,7 +19,7 @@ class HoustonAlbumFormProvider extends StateNotifier<Album> {
   }
 
   void load(String uuid) async {
-    if (uuid.isNotEmpty) {
+    if (uuid.isNotEmpty && uuid != "new") {
       final album = await AlbumDbService().retrieve(uuid: uuid);
       if (album != null) {
         state = album;

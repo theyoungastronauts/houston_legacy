@@ -24,7 +24,7 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}ListScreen extends BaseScreen {
       onPressed: () {
         ref.read({{#camelCase}}{{name}}{{/camelCase}}FormProvider("").notifier).clear();
         {{=<% %>=}}
-        context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/new");
+        context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/new");
         <%={{ }}=%>
       },
       child: const Icon(Icons.add),

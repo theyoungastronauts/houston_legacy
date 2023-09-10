@@ -1,12 +1,13 @@
-import 'package:app/src/core/singletons/singletons.dart';
-import 'package:app/src/core/singletons/storage.dart';
+import 'package:app/src/core/providers/storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeProvider extends StateNotifier<ThemeMode> {
-  late final Storage _storage = singleton<Storage>();
+  final Ref ref;
+  late final Storage _storage;
 
-  ThemeProvider([ThemeMode themeMode = ThemeMode.system]) : super(themeMode) {
+  ThemeProvider(this.ref, [ThemeMode themeMode = ThemeMode.system]) : super(themeMode) {
+    _storage = ref.read(storageProvider);
     _init();
   }
 
@@ -38,4 +39,4 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
   }
 }
 
-final themeProvider = StateNotifierProvider<ThemeProvider, ThemeMode>((ref) => ThemeProvider());
+final themeProvider = StateNotifierProvider<ThemeProvider, ThemeMode>((ref) => ThemeProvider(ref));

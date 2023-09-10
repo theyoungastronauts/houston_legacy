@@ -19,7 +19,7 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
   }
 
   void load(String uuid) async {
-    if (uuid.isNotEmpty) {
+    if (uuid.isNotEmpty && uuid != "new") {
       final food = await FoodDbService().retrieve(uuid: uuid);
       if (food != null) {
         state = food;
