@@ -104,6 +104,7 @@ class PromptModal {
     bool destructive = false,
     bool readOnly = false,
     bool withCopy = false,
+    bool multiline = false,
     Function(String)? onValidSubmission,
   }) async {
     final context = rootNavigatorKey.currentContext!;
@@ -132,6 +133,8 @@ class PromptModal {
                   obscureText: obscureText,
                   autofocus: true,
                   readOnly: readOnly,
+                  minLines: multiline ? 3 : 1,
+                  maxLines: multiline ? 3 : 1,
                   decoration: InputDecoration(
                     label: Text(
                       labelText,

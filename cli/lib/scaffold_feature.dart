@@ -41,6 +41,8 @@ Future<void> newFeature() async {
 Future<void> scaffoldFeature({
   String? name,
   bool runPostGenerator = true,
+  bool updateRoutes = true,
+  bool updateNavigation = true,
 }) async {
   name ??= ask(
     "Feature Name:",
@@ -81,44 +83,44 @@ Future<void> scaffoldFeature({
     vars: blueprint.serialize(),
   );
 
-  // update app_router.dart
   final routerPath = "${appModuleDirectory()}/src/core/navigation/app_router.dart";
 
-  await insertTextInFile(
-    path: routerPath,
-    value: "import 'package:app/src/feature/${snakeCase(name)}/routes.dart';",
-    prepend: true,
-  );
+  if (updateRoutes) {
+    await insertTextInFile(
+      path: routerPath,
+      value: "import 'package:app/src/feature/${snakeCase(name)}/routes.dart';",
+      prepend: true,
+    );
 
-  await insertTextInFileAtToken(
-    path: routerPath,
-    token: ROUTER_ROUTE_INSERT_TOKEN,
-    value: "${camelCase(name)}Routes,",
-  );
+    await insertTextInFileAtToken(
+      path: routerPath,
+      token: ROUTER_ROUTE_INSERT_TOKEN,
+      value: "${pascalCase(name)}Routes.branch,",
+    );
+  }
 
-  // update dashboard_container.dart
   final dashboardPath = "${appModuleDirectory()}/src/core/navigation/dashboard_container.dart";
+  if (updateNavigation) {
+    // final currentRouteCount = await countSpecificStringInFile(path: dashboardPath, search: "Route(),");
 
-  final currentRouteCount = await countSpecificStringInFile(path: dashboardPath, search: "Route(),");
+    // await insertTextInFileAtToken(
+    //   path: dashboardPath,
+    //   token: DASHBOARD_ROUTE_INSERT_TOKEN,
+    //   value: "const ${pascalCase(name)}Route(),",
+    // );
 
-  await insertTextInFileAtToken(
-    path: dashboardPath,
-    token: DASHBOARD_ROUTE_INSERT_TOKEN,
-    value: "const ${pascalCase(name)}Route(),",
-  );
+    await insertTextInFileAtToken(
+      path: dashboardPath,
+      token: DASHBOARD_TAB_INSERT_TOKEN,
+      value: 'NavigationDestination(label: "${pascalCase(name)}", icon: Icon(Icons.star),),',
+    );
 
-  await insertTextInFileAtToken(
-    path: dashboardPath,
-    token: DASHBOARD_TAB_INSERT_TOKEN,
-    value: 'BottomNavigationBarItem(label: "${pascalCase(name)}", icon: Icon(Icons.star),),',
-  );
-
-  await insertTextInFileAtToken(
-    path: dashboardPath,
-    token: DASHBOARD_NAV_INSERT_TOKEN,
-    value:
-        'AppButton(label: "${pascalCase(name)}",type: AppButtonType.Text, variant: tabsRouter.activeIndex == $currentRouteCount ? AppColorVariant.primary : AppColorVariant.light, onPressed: () { onPressed(tabsRouter, $currentRouteCount);},),',
-  );
+    await insertTextInFileAtToken(
+      path: dashboardPath,
+      token: DASHBOARD_NAV_INSERT_TOKEN,
+      value: 'NavigationRailDestination(label: Text("${pascalCase(name)}"), icon: Icon(Icons.star),),',
+    );
+  }
 
   print("Formatting files");
   final filePaths = [
@@ -145,10 +147,11 @@ Future<void> scaffoldFeature({
   }
 
   print(green("$name app generated in $appGeneratedPath"));
+
   if (runPostGenerator) {
     print(white("Running generate function in flutter project..."));
 
-    final args = "packages pub run build_runner build --delete-conflicting-outputs".split(" ");
+    final args = "packages pub run build_runner build --delete-conflicting-outputs --build-filter=$appGeneratedPath".split(" ");
     final process = await Process.start("flutter", args, workingDirectory: appDir());
     await process.stdout.transform(utf8.decoder).forEach((line) => print(yellow(line)));
   }

@@ -8,12 +8,10 @@ import 'package:app/src/core/singletons/singletons.dart';
 import 'package:app/src/core/utils/toast.dart';
 import 'package:app/src/core/utils/validation.dart';
 import 'package:app/src/feature/auth/services/user_service.dart';
-import 'package:app/src/feature/profile/models/profile.dart';
 import 'package:app/src/feature/profile/services/profile_db_service.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SessionProvider extends StateNotifier<AppSession> {
@@ -28,10 +26,10 @@ class SessionProvider extends StateNotifier<AppSession> {
     final session = singleton<SupabaseClient>().auth.currentSession;
 
     state = state.copyWith(ready: true, session: session);
-    final context = rootNavigatorKey.currentContext!;
 
     if (session != null) {
-      AutoRouter.of(context).replace(const DashboardRoute());
+      final context = rootNavigatorKey.currentContext!;
+      context.go(defaultAppRoute);
     }
     addAuthStateChangeListener();
   }
@@ -50,7 +48,7 @@ class SessionProvider extends StateNotifier<AppSession> {
 
           state = state.copyWith(redirecting: true, session: session, profile: profile);
           final context = rootNavigatorKey.currentContext!;
-          await AutoRouter.of(context).replace(const DashboardRoute());
+          context.go(defaultAppRoute);
           state = state.copyWith(redirecting: false);
         }
         return;
@@ -130,7 +128,7 @@ class SessionProvider extends StateNotifier<AppSession> {
     await singleton<SupabaseClient>().auth.signOut();
     state = state.copyWith(session: null, profile: null);
     final context = rootNavigatorKey.currentContext!;
-    AutoRouter.of(context).replace(const LandingRoute());
+    context.replace('/');
   }
 
   Future<bool> changeEmail(String email) async {
@@ -142,7 +140,6 @@ class SessionProvider extends StateNotifier<AppSession> {
         email: email,
         emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
       );
-      print(user);
       if (user != null) {
         Toast.message("Check your email!");
         return true;
@@ -153,6 +150,23 @@ class SessionProvider extends StateNotifier<AppSession> {
       Toast.error();
     }
 
+    return false;
+  }
+
+  Future<bool> updateBio(String bio) async {
+    if (state.profile == null) return false;
+
+    final profile = state.profile!.copyWith(bio: bio);
+
+    try {
+      final p = await ProfileDbService().save(profile);
+      if (p != null) {
+        state = state.copyWith(profile: p);
+      }
+      return true;
+    } catch (e) {
+      Toast.error();
+    }
     return false;
   }
 }

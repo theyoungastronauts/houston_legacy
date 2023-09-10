@@ -1,19 +1,17 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/navigation/app_router.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/screens/base_screen.dart';
 import '../../../core/components/empty_placeholder.dart';
 import '../providers/food_detail_provider.dart';
 import '../components/food_details.dart';
 import '../providers/food_form_provider.dart';
 
-@RoutePage()
 class FoodDetailScreen extends BaseScreen {
   final String uuid;
   const FoodDetailScreen({
     super.key,
-    @PathParam('uuid') required this.uuid,
+    required this.uuid,
   });
 
   @override
@@ -31,10 +29,8 @@ class FoodDetailScreen extends BaseScreen {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    ref
-                        .read(foodFormProvider(food.uuid).notifier)
-                        .load(food.uuid);
-                    AutoRouter.of(context).push(FoodEditRoute(uuid: food.uuid));
+                    ref.read(foodFormProvider(food.uuid).notifier).load(food.uuid);
+                    context.push('/food/edit/${food.uuid}');
                   },
                 )
               ]
@@ -51,9 +47,7 @@ class FoodDetailScreen extends BaseScreen {
     final model = ref.watch(foodDetailProvider(uuid));
 
     return model.when(
-      data: (food) => food != null
-          ? FoodDetails(food)
-          : const EmptyPlaceholder(title: "Error"),
+      data: (food) => food != null ? FoodDetails(food) : const EmptyPlaceholder(title: "Error"),
       error: (_, __) => const EmptyPlaceholder(title: "Error"),
       loading: () => const Center(child: CircularProgressIndicator()),
     );

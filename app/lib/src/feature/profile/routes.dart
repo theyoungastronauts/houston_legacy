@@ -1,44 +1,44 @@
 import 'package:app/src/core/components/base_component.dart';
+import 'package:app/src/feature/profile/screens/profile_detail_screen.dart';
+import 'package:app/src/feature/profile/screens/profile_edit_screen.dart';
+import 'package:app/src/feature/profile/screens/profile_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 export './screens/profile_list_screen.dart';
 export './screens/profile_detail_screen.dart';
 export './screens/profile_edit_screen.dart';
 
-@RoutePage()
 class ProfileContainer extends BaseComponent {
-  const ProfileContainer({super.key});
+  final Widget child;
+  const ProfileContainer({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const AutoRouter();
+    return child;
   }
 }
 
-AutoRoute get profileRoutes {
-  return AutoRoute(
-    path: "profile",
-    page: ProfileRoute.page,
-    children: [
-      AutoRoute(
-        path: "",
-        page: ProfileListRoute.page,
+class ProfileRoutes {
+  static const String namespace = "/profile";
+  static final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "Profile Shell");
+
+  static StatefulShellBranch branch = StatefulShellBranch(
+    navigatorKey: shellNavigatorKey,
+    routes: [
+      GoRoute(
+        path: namespace,
+        builder: (context, state) => const ProfileListScreen(),
       ),
-      AutoRoute(
-        path: ":uuid",
-        page: ProfileDetailRoute.page,
+      GoRoute(
+        path: "$namespace/:uuid",
+        builder: (context, state) => ProfileDetailScreen(uuid: state.pathParameters['uuid']!),
       ),
-      AutoRoute(
-        path: "create",
-        page: ProfileEditRoute.page,
-      ),
-      AutoRoute(
-        path: "edit/:uuid",
-        page: ProfileEditRoute.page,
-      ),
+      GoRoute(
+        path: "$namespace/edit/:uuid",
+        builder: (context, state) => ProfileEditScreen(uuid: state.pathParameters['uuid']!),
+      )
     ],
   );
 }

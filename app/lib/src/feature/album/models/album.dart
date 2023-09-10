@@ -17,7 +17,8 @@ class Album with _$Album {
     required String description,
     required int year,
     @JsonKey(toJson: profileToJson) required Profile profile,
-    @JsonKey(name: "created_at", includeToJson: false) required DateTime createdAt,
+    @JsonKey(name: "created_at", includeToJson: false)
+    required DateTime createdAt,
   }) = _Album;
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);

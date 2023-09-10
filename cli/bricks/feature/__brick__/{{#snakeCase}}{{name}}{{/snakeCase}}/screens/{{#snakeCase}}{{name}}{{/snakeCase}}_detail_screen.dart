@@ -1,7 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/navigation/app_router.dart';
+import 'package:go_router/go_router.dart';
+
+import '../routes.dart';
 import '../../../core/screens/base_screen.dart';
 import '../../../core/components/empty_placeholder.dart';
 import '../providers/{{#snakeCase}}{{name}}{{/snakeCase}}_detail_provider.dart';
@@ -9,12 +10,11 @@ import '../components/{{#snakeCase}}{{name}}{{/snakeCase}}_details.dart';
 import '../providers/{{#snakeCase}}{{name}}{{/snakeCase}}_form_provider.dart';
 
 
-@RoutePage()
 class {{#pascalCase}}{{name}}{{/pascalCase}}DetailScreen extends BaseScreen {
   final String uuid;
   const {{#pascalCase}}{{name}}{{/pascalCase}}DetailScreen({
     super.key,
-    @PathParam('uuid') required this.uuid,
+    required this.uuid,
   });
 
   @override
@@ -33,7 +33,9 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}DetailScreen extends BaseScreen {
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     ref.read({{#camelCase}}{{name}}{{/camelCase}}FormProvider({{#camelCase}}{{name}}{{/camelCase}}.uuid).notifier).load({{#camelCase}}{{name}}{{/camelCase}}.uuid);
-                    AutoRouter.of(context).push({{#pascalCase}}{{name}}{{/pascalCase}}EditRoute(uuid: {{#camelCase}}{{name}}{{/camelCase}}.uuid));
+                    {{=<% %>=}}
+                    context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/${<% #camelCase %><% name %><% /camelCase %>.uuid}");
+                    <%={{ }}=%>
                   },
                 )
               ]

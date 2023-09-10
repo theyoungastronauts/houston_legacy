@@ -1,13 +1,12 @@
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../routes.dart';
 import '../../../core/screens/base_screen.dart';
 import '../providers/album_form_provider.dart';
 import '../components/album_list.dart';
 
-@RoutePage()
 class AlbumListScreen extends BaseScreen {
   const AlbumListScreen({super.key});
 
@@ -25,7 +24,8 @@ class AlbumListScreen extends BaseScreen {
     return FloatingActionButton(
       onPressed: () {
         ref.read(albumFormProvider("").notifier).clear();
-        AutoRouter.of(context).push(AlbumEditRoute(uuid: ""));
+
+        context.push("${AlbumRoutes.namespace}/new");
       },
       child: const Icon(Icons.add),
     );

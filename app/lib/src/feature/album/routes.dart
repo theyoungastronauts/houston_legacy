@@ -1,43 +1,31 @@
-import 'package:app/src/core/components/base_component.dart';
 import 'package:flutter/material.dart';
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-export './screens/album_list_screen.dart';
-export './screens/album_detail_screen.dart';
-export './screens/album_edit_screen.dart';
+import './screens/album_list_screen.dart';
+import './screens/album_detail_screen.dart';
+import './screens/album_edit_screen.dart';
 
-@RoutePage()
-class AlbumContainer extends BaseComponent {
-  const AlbumContainer({super.key});
+class AlbumRoutes {
+  static const String namespace = "/album";
+  static final shellNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: "Album Shell");
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const AutoRouter();
-  }
-}
-
-AutoRoute get albumRoutes {
-  return AutoRoute(
-    path: "album",
-    page: AlbumRoute.page,
-    children: [
-      AutoRoute(
-        path: "",
-        page: AlbumListRoute.page,
+  static StatefulShellBranch branch = StatefulShellBranch(
+    navigatorKey: shellNavigatorKey,
+    routes: [
+      GoRoute(
+        path: namespace,
+        builder: (context, state) => const AlbumListScreen(),
       ),
-      AutoRoute(
-        path: ":uuid",
-        page: AlbumDetailRoute.page,
+      GoRoute(
+        path: "$namespace/:uuid",
+        builder: (context, state) =>
+            AlbumDetailScreen(uuid: state.pathParameters['uuid']!),
       ),
-      AutoRoute(
-        path: "create",
-        page: AlbumEditRoute.page,
-      ),
-      AutoRoute(
-        path: "edit/:uuid",
-        page: AlbumEditRoute.page,
+      GoRoute(
+        path: "$namespace/edit/:uuid",
+        builder: (context, state) =>
+            AlbumEditScreen(uuid: state.pathParameters['uuid']!),
       ),
     ],
   );

@@ -1,19 +1,19 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/navigation/app_router.dart';
+import 'package:go_router/go_router.dart';
+
+import '../routes.dart';
 import '../../../core/screens/base_screen.dart';
 import '../../../core/components/empty_placeholder.dart';
 import '../providers/album_detail_provider.dart';
 import '../components/album_details.dart';
 import '../providers/album_form_provider.dart';
 
-@RoutePage()
 class AlbumDetailScreen extends BaseScreen {
   final String uuid;
   const AlbumDetailScreen({
     super.key,
-    @PathParam('uuid') required this.uuid,
+    required this.uuid,
   });
 
   @override
@@ -34,8 +34,8 @@ class AlbumDetailScreen extends BaseScreen {
                     ref
                         .read(albumFormProvider(album.uuid).notifier)
                         .load(album.uuid);
-                    AutoRouter.of(context)
-                        .push(AlbumEditRoute(uuid: album.uuid));
+
+                    context.push("${AlbumRoutes.namespace}/edit/${album.uuid}");
                   },
                 )
               ]

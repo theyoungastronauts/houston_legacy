@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../config/theme.dart';
 import '../../../core/utils/toast.dart';
@@ -35,7 +35,7 @@ class AlbumFormActions extends BaseComponent {
               onPressed: () async {
                 final confirmed = await provider.discard();
                 if (confirmed) {
-                  AutoRouter.of(context).pop();
+                  context.pop();
                 }
               },
             ),
@@ -50,9 +50,8 @@ class AlbumFormActions extends BaseComponent {
                       onPressed: () async {
                         final success = await provider.delete();
                         if (success == true) {
-                          AutoRouter.of(context).popUntil((route) {
-                            return route.settings.name == "AlbumListRoute";
-                          });
+                          context.pop();
+                          context.pop();
                         }
                       },
                     ),
@@ -63,7 +62,7 @@ class AlbumFormActions extends BaseComponent {
                   onPressed: () async {
                     final success = await provider.submit();
                     if(success == true){
-                      AutoRouter.of(context).pop();
+                      context.pop();
                       Toast.message("Album saved successfully!");
                     }
 

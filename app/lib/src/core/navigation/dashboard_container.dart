@@ -1,61 +1,83 @@
 import 'package:app/src/core/components/base_component.dart';
-import 'package:app/src/core/components/buttons.dart';
-import 'package:app/src/config/theme.dart';
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:app/src/feature/auth/components/auth_dropdown.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:app/src/core/navigation/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-part 'houston_dashboard_container.dart';
-
-@RoutePage()
-class DashboardContainer extends HoustonDashboardContainer {
-  const DashboardContainer({super.key});
-
-  @override
-  List<PageRouteInfo> get routes => [
-        const FoodRoute(),
-        const AlbumRoute(),
-        //::HOUSTON_INSERT_ROUTE::
-      ];
+class DashboardContainer extends BaseComponent {
+  final StatefulNavigationShell navigationShell;
+  const DashboardContainer({super.key, required this.navigationShell});
 
   @override
-  List<BottomNavigationBarItem> tabs(BuildContext context, WidgetRef ref) {
-    return const [
-      BottomNavigationBarItem(
-        label: "Food",
-        icon: Icon(Icons.home),
-      ),
-
-      BottomNavigationBarItem(
-        label: "Album",
-        icon: Icon(Icons.star),
-      ),
-      //::HOUSTON_INSERT_TAB::
-    ];
+  Widget body(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        Expanded(
+          child: navigationShell,
+        ),
+        NavigationBar(
+          selectedIndex: navigationShell.currentIndex,
+          onDestinationSelected: (index) {
+            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.food_bank),
+              label: "Food",
+            ),
+            NavigationDestination(
+              label: "Album",
+              icon: Icon(Icons.star),
+            ),
+            //::HOUSTON_INSERT_TAB::
+          ],
+        ),
+      ],
+    );
   }
 
   @override
-  List<Widget> topNav(BuildContext context, WidgetRef ref, TabsRouter tabsRouter) {
-    return [
-      AppButton(
-        label: "Food",
-        type: AppButtonType.Text,
-        variant: tabsRouter.activeIndex == 0 ? AppColorVariant.primary : AppColorVariant.light,
-        onPressed: () {
-          onPressed(tabsRouter, 0);
-        },
+  Widget bodyMd(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      drawer: const MainDrawer(),
+      body: Row(
+        children: [
+          Column(
+            children: [
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: const Icon(Icons.menu),
+                );
+              }),
+              Expanded(
+                child: NavigationRail(
+                  selectedIndex: navigationShell.currentIndex,
+                  labelType: NavigationRailLabelType.all,
+                  destinations: const [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.food_bank),
+                      label: Text("Food"),
+                    ),
+                    NavigationRailDestination(
+                      label: Text("Album"),
+                      icon: Icon(Icons.star),
+                    ),
+                    //::HOUSTON_INSERT_NAV::
+                  ],
+                  onDestinationSelected: (index) {
+                    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+                  },
+                ),
+              ),
+            ],
+          ),
+          const VerticalDivider(),
+          Expanded(child: navigationShell)
+        ],
       ),
-      AppButton(
-        label: "Album",
-        type: AppButtonType.Text,
-        variant: tabsRouter.activeIndex == 1 ? AppColorVariant.primary : AppColorVariant.light,
-        onPressed: () {
-          onPressed(tabsRouter, 1);
-        },
-      ),
-      //::HOUSTON_INSERT_NAV::
-    ];
+    );
   }
 }

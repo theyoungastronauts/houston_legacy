@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -6,10 +5,9 @@ import '../../../core/screens/base_screen.dart';
 import '../components/{{#snakeCase}}{{name}}{{/snakeCase}}_form.dart';
 import '../components/{{#snakeCase}}{{name}}{{/snakeCase}}_form_actions.dart';
 
-@RoutePage()
 class {{#pascalCase}}{{name}}{{/pascalCase}}EditScreen extends BaseScreen {
   final String uuid;
-  const {{#pascalCase}}{{name}}{{/pascalCase}}EditScreen({super.key, @PathParam('uuid') required this.uuid});
+  const {{#pascalCase}}{{name}}{{/pascalCase}}EditScreen({super.key, required this.uuid});
 
   @override
   AppBar? appBar(BuildContext context, WidgetRef ref) {

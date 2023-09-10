@@ -1,10 +1,9 @@
 import 'package:app/src/config/theme.dart';
 import 'package:app/src/core/components/base_component.dart';
-import 'package:app/src/core/navigation/app_router.dart';
 import 'package:app/src/core/providers/session_provider.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthDropdown extends BaseComponent {
   const AuthDropdown({
@@ -24,7 +23,7 @@ class AuthDropdown extends BaseComponent {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  user.email ?? "Me",
+                  "My Account",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -37,7 +36,7 @@ class AuthDropdown extends BaseComponent {
                   "Edit Profile",
                 ),
                 onTap: () {
-                  AutoRouter.of(context).push(const EditProfileRoute());
+                  context.push('/edit-profile');
                 },
               ),
               const PopupMenuDivider(),
