@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../routes.dart';
 import '../../../core/screens/base_screen.dart';
 import '../../../core/components/empty_placeholder.dart';
 import '../providers/food_detail_provider.dart';
@@ -29,8 +31,11 @@ class FoodDetailScreen extends BaseScreen {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    ref.read(foodFormProvider(food.uuid).notifier).load(food.uuid);
-                    context.push('/food/edit/${food.uuid}');
+                    ref
+                        .read(foodFormProvider(food.uuid).notifier)
+                        .load(food.uuid);
+
+                    context.push("${FoodRoutes.namespace}/edit/${food.uuid}");
                   },
                 )
               ]
@@ -47,7 +52,9 @@ class FoodDetailScreen extends BaseScreen {
     final model = ref.watch(foodDetailProvider(uuid));
 
     return model.when(
-      data: (food) => food != null ? FoodDetails(food) : const EmptyPlaceholder(title: "Error"),
+      data: (food) => food != null
+          ? FoodDetails(food)
+          : const EmptyPlaceholder(title: "Error"),
       error: (_, __) => const EmptyPlaceholder(title: "Error"),
       loading: () => const Center(child: CircularProgressIndicator()),
     );

@@ -1,6 +1,4 @@
-import 'package:app/src/core/singletons/singletons.dart';
 import 'package:app/src/core/utils/debugger.dart';
-import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class DbService {
@@ -10,7 +8,7 @@ abstract class DbService {
 
   Future<PostgrestResponse> listData(int page, {int limit = 10, String? select}) async {
     try {
-      return await singleton<SupabaseClient>()
+      return await Supabase.instance.client
           .from(table)
           .select(
             select ?? defaultSelect,
@@ -24,7 +22,7 @@ abstract class DbService {
   }
 
   Future<dynamic> retrieveData({required String column, required String value, String? select}) async {
-    return await singleton<SupabaseClient>().from(table).select(select ?? defaultSelect).eq(column, value).single();
+    return await Supabase.instance.client.from(table).select(select ?? defaultSelect).eq(column, value).single();
   }
 
   Future<dynamic> retrieveDataByIdentifier({int? id, String? uuid, String? select}) async {
@@ -40,16 +38,16 @@ abstract class DbService {
   }
 
   Future<dynamic> insertData(Map<String, dynamic> data) async {
-    return await singleton<SupabaseClient>().from(table).insert(data).select(defaultSelect).single();
+    return await Supabase.instance.client.from(table).insert(data).select(defaultSelect).single();
   }
 
   Future<dynamic> updateData(int id, Map<String, dynamic> data) async {
-    return await singleton<SupabaseClient>().from(table).update(data).match({"id": id}).select(defaultSelect).single();
+    return await Supabase.instance.client.from(table).update(data).match({"id": id}).select(defaultSelect).single();
   }
 
   Future<bool> deleteData(int id) async {
     try {
-      await singleton<SupabaseClient>().from(table).delete().match({"id": id});
+      await Supabase.instance.client.from(table).delete().match({"id": id});
       return true;
     } catch (e, st) {
       Debugger.error("Delete error", e, st);

@@ -1,7 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../config/env.dart';
-import 'singletons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class Storage {
@@ -35,7 +36,7 @@ class StorageImplementation extends Storage {
 
   @override
   Future<void> init() async {
-    _instance = singleton<SharedPreferences>();
+    _instance = await SharedPreferences.getInstance();
     isInitialized = true;
   }
 
@@ -64,3 +65,5 @@ class StorageImplementation extends Storage {
     await _instance.clear();
   }
 }
+
+final storageProvider = Provider<Storage>((ref) => StorageImplementation());

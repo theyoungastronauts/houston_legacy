@@ -18,7 +18,8 @@ class DashboardContainer extends BaseComponent {
         NavigationBar(
           selectedIndex: navigationShell.currentIndex,
           onDestinationSelected: (index) {
-            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+            navigationShell.goBranch(index,
+                initialLocation: index == navigationShell.currentIndex);
           },
           destinations: const [
             NavigationDestination(
@@ -27,6 +28,10 @@ class DashboardContainer extends BaseComponent {
             ),
             NavigationDestination(
               label: "Album",
+              icon: Icon(Icons.star),
+            ),
+            NavigationDestination(
+              label: "Food",
               icon: Icon(Icons.star),
             ),
             //::HOUSTON_INSERT_TAB::
@@ -65,10 +70,15 @@ class DashboardContainer extends BaseComponent {
                       label: Text("Album"),
                       icon: Icon(Icons.star),
                     ),
+                    NavigationRailDestination(
+                      label: Text("Food"),
+                      icon: Icon(Icons.star),
+                    ),
                     //::HOUSTON_INSERT_NAV::
                   ],
                   onDestinationSelected: (index) {
-                    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
+                    navigationShell.goBranch(index,
+                        initialLocation: index == navigationShell.currentIndex);
                   },
                 ),
               ),

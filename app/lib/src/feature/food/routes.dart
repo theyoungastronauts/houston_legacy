@@ -7,7 +7,8 @@ import './screens/food_edit_screen.dart';
 
 class FoodRoutes {
   static const String namespace = "/food";
-  static final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "Food Shell");
+  static final shellNavigatorKey =
+      GlobalKey<NavigatorState>(debugLabel: "Food Shell");
 
   static StatefulShellBranch branch = StatefulShellBranch(
     navigatorKey: shellNavigatorKey,
@@ -18,11 +19,13 @@ class FoodRoutes {
       ),
       GoRoute(
         path: "$namespace/:uuid",
-        builder: (context, state) => FoodDetailScreen(uuid: state.pathParameters['uuid']!),
+        builder: (context, state) =>
+            FoodDetailScreen(uuid: state.pathParameters['uuid']!),
       ),
       GoRoute(
         path: "$namespace/edit/:uuid",
-        builder: (context, state) => FoodEditScreen(uuid: state.pathParameters['uuid']!),
+        builder: (context, state) =>
+            FoodEditScreen(uuid: state.pathParameters['uuid']!),
       ),
     ],
   );

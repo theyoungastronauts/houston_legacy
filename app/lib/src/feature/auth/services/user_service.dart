@@ -1,5 +1,4 @@
 import 'package:app/src/core/services/db_service.dart';
-import 'package:app/src/core/singletons/singletons.dart';
 import 'package:app/src/core/utils/debugger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -16,15 +15,15 @@ class UserService extends DbService {
       return null;
     }
 
-    final response = await singleton<SupabaseClient>().auth.updateUser(
-          UserAttributes(
-            email: email,
-            password: password,
-            phone: phone,
-            data: data,
-          ),
-          emailRedirectTo: emailRedirectTo,
-        );
+    final response = await Supabase.instance.client.auth.updateUser(
+      UserAttributes(
+        email: email,
+        password: password,
+        phone: phone,
+        data: data,
+      ),
+      emailRedirectTo: emailRedirectTo,
+    );
 
     return response.user;
   }

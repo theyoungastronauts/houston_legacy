@@ -19,7 +19,7 @@ class HoustonProfileFormProvider extends StateNotifier<Profile> {
   }
 
   void load(String uuid) async {
-    if (uuid.isNotEmpty) {
+    if (uuid.isNotEmpty && uuid != "new") {
       final profile = await ProfileDbService().retrieve(uuid: uuid);
       if (profile != null) {
         state = profile;

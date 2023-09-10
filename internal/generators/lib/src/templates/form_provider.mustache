@@ -11,7 +11,7 @@ class {{#pascalCase}}{{className}}{{/pascalCase}}FormProvider extends StateNotif
   }
 
   void load(String uuid) async {
-    if(uuid.isNotEmpty){
+    if(uuid.isNotEmpty && uuid != "new"){
       final {{#camelCase}}{{modelName}}{{/camelCase}} = await {{#pascalCase}}{{modelName}}{{/pascalCase}}DbService().retrieve(uuid:uuid);
       if({{#camelCase}}{{modelName}}{{/camelCase}} != null){
         state = {{#camelCase}}{{modelName}}{{/camelCase}};
