@@ -6,7 +6,7 @@ import './screens/album_detail_screen.dart';
 import './screens/album_edit_screen.dart';
 
 class AlbumRoutes {
-  static const String namespace = "album";
+  static const String namespace = "/album";
   static final shellNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: "Album Shell");
 

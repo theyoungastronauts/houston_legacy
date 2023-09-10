@@ -28,32 +28,58 @@ class SettingsScreen extends BaseScreen {
     final user = ref.watch(sessionProvider).user!;
     final profile = ref.watch(sessionProvider).profile;
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 600),
-      child: Card(
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 600),
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ListTile(
-                  title: Text(user.email ?? '-'),
-                  subtitle: const Text("Email Address"),
-                  leading: const Icon(Icons.email),
-                  trailing: AppButton(
-                    label: "Change",
-                    onPressed: () async {
-                      final newEmail = await PromptModal.show(
-                        title: "Change Email Address",
-                        labelText: "Email",
-                        validator: formValidatorEmail,
-                        initialValue: user.email ?? "",
-                      );
+                if (profile != null)
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.format_align_left),
+                      title: const Text("Bio"),
+                      subtitle: Text(profile.bio.isNotEmpty ? profile.bio : "-"),
+                      trailing: AppButton(
+                        label: "Change",
+                        onPressed: () async {
+                          final newBio = await PromptModal.show(
+                            title: "Update Bio",
+                            labelText: "Bio",
+                            initialValue: profile.bio,
+                            multiline: true,
+                          );
 
-                      if (newEmail != null) {
-                        ref.read(sessionProvider.notifier).changeEmail(newEmail);
-                      }
-                    },
+                          if (newBio != null) {
+                            ref.read(sessionProvider.notifier).updateBio(newBio);
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                Card(
+                  child: ListTile(
+                    title: Text(user.email ?? '-'),
+                    subtitle: const Text("Email Address"),
+                    leading: const Icon(Icons.email),
+                    trailing: AppButton(
+                      label: "Change",
+                      onPressed: () async {
+                        final newEmail = await PromptModal.show(
+                          title: "Change Email Address",
+                          labelText: "Email",
+                          validator: formValidatorEmail,
+                          initialValue: user.email ?? "",
+                        );
+
+                        if (newEmail != null) {
+                          ref.read(sessionProvider.notifier).changeEmail(newEmail);
+                        }
+                      },
+                    ),
                   ),
                 )
               ],

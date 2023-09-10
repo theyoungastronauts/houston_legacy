@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../routes.dart';
-import '../../../core/navigation/app_router.dart';
 import '../../../core/screens/base_screen.dart';
 import '../../../core/components/empty_placeholder.dart';
 import '../providers/album_detail_provider.dart';

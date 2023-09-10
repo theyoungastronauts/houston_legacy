@@ -36,7 +36,6 @@ final appRouter = GoRouter(
       },
       branches: [
         FoodRoutes.branch,
-        ProfileRoutes.branch,
         AlbumRoutes.branch,
         //::HOUSTON_INSERT_ROUTE::
       ],

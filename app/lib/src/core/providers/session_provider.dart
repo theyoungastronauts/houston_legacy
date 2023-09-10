@@ -140,7 +140,6 @@ class SessionProvider extends StateNotifier<AppSession> {
         email: email,
         emailRedirectTo: kIsWeb ? null : '${Env.deeplinkProtocol}://login-callback/',
       );
-      print(user);
       if (user != null) {
         Toast.message("Check your email!");
         return true;
@@ -151,6 +150,23 @@ class SessionProvider extends StateNotifier<AppSession> {
       Toast.error();
     }
 
+    return false;
+  }
+
+  Future<bool> updateBio(String bio) async {
+    if (state.profile == null) return false;
+
+    final profile = state.profile!.copyWith(bio: bio);
+
+    try {
+      final p = await ProfileDbService().save(profile);
+      if (p != null) {
+        state = state.copyWith(profile: p);
+      }
+      return true;
+    } catch (e) {
+      Toast.error();
+    }
     return false;
   }
 }

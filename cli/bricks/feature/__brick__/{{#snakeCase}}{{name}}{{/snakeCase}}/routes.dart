@@ -7,7 +7,7 @@ import './screens/{{#snakeCase}}{{name}}{{/snakeCase}}_edit_screen.dart';
 
 
 class {{#pascalCase}}{{name}}{{/pascalCase}}Routes {
-  static const String namespace = "{{#paramCase}}{{name}}{{/paramCase}}";
+  static const String namespace = "/{{#paramCase}}{{name}}{{/paramCase}}";
   static final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "{{#pascalCase}}{{name}}{{/pascalCase}} Shell");
 
    static StatefulShellBranch branch = StatefulShellBranch(

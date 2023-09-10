@@ -18,17 +18,12 @@ class DashboardContainer extends BaseComponent {
         NavigationBar(
           selectedIndex: navigationShell.currentIndex,
           onDestinationSelected: (index) {
-            navigationShell.goBranch(index,
-                initialLocation: index == navigationShell.currentIndex);
+            navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
           },
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.food_bank),
               label: "Food",
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.people),
-              label: "Profiles",
             ),
             NavigationDestination(
               label: "Album",
@@ -54,7 +49,7 @@ class DashboardContainer extends BaseComponent {
                   onPressed: () {
                     Scaffold.of(context).openDrawer();
                   },
-                  icon: Icon(Icons.menu),
+                  icon: const Icon(Icons.menu),
                 );
               }),
               Expanded(
@@ -67,18 +62,13 @@ class DashboardContainer extends BaseComponent {
                       label: Text("Food"),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.people),
-                      label: Text("Profiles"),
-                    ),
-                    NavigationRailDestination(
                       label: Text("Album"),
                       icon: Icon(Icons.star),
                     ),
                     //::HOUSTON_INSERT_NAV::
                   ],
                   onDestinationSelected: (index) {
-                    navigationShell.goBranch(index,
-                        initialLocation: index == navigationShell.currentIndex);
+                    navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex);
                   },
                 ),
               ),
