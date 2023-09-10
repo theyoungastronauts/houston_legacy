@@ -1,5 +1,6 @@
 import 'package:app/src/config/theme.dart';
 import 'package:app/src/core/components/buttons.dart';
+import 'package:app/src/core/navigation/app_router.dart';
 import 'package:app/src/core/providers/session_provider.dart';
 import 'package:app/src/core/screens/base_screen.dart';
 import 'package:flutter/material.dart';
@@ -57,14 +58,14 @@ class LandingScreenContent extends BaseScreen {
                 AppButton(
                   label: "Login",
                   onPressed: () {
-                    context.push(Uri(path: '/login').toString());
+                    context.push('/login');
                   },
                 ),
                 const SizedBox(width: 8),
                 AppButton(
                   label: "Sign Up",
                   onPressed: () {
-                    context.push(Uri(path: '/register').toString());
+                    context.push('/register');
                   },
                 ),
               ],
@@ -75,7 +76,7 @@ class LandingScreenContent extends BaseScreen {
               type: AppButtonType.Text,
               variant: AppColorVariant.secondary,
               onPressed: () {
-                context.push(Uri(path: '/app').toString());
+                context.push(defaultAppRoute);
               },
             ),
           ],

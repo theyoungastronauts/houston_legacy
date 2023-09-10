@@ -22,7 +22,7 @@ class FoodListScreen extends BaseScreen {
     return FloatingActionButton(
       onPressed: () {
         ref.read(foodFormProvider("").notifier).clear();
-        context.push(Uri(path: '/food/edit/new').toString());
+        context.push('/food/edit/new');
       },
       child: const Icon(Icons.add),
     );

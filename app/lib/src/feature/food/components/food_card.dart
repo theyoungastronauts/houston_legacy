@@ -13,7 +13,7 @@ class FoodCard extends BaseComponent {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        context.push(Uri(path: "/food/${food.uuid}").toString());
+        context.push('/food/${food.uuid}');
       },
       child: Card(
         child: Padding(padding: const EdgeInsets.all(8.0), child: Text(food.name)),

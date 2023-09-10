@@ -30,7 +30,7 @@ class FoodDetailScreen extends BaseScreen {
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     ref.read(foodFormProvider(food.uuid).notifier).load(food.uuid);
-                    context.push(Uri(path: '/food/edit/${food.uuid}').toString());
+                    context.push('/food/edit/${food.uuid}');
                   },
                 )
               ]

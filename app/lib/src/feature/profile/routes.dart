@@ -20,24 +20,25 @@ class ProfileContainer extends BaseComponent {
   }
 }
 
-final profileRoutes = ShellRoute(
-  builder: (context, state, child) {
-    return ProfileContainer(
-      child: child,
-    );
-  },
-  routes: [
-    GoRoute(
-      path: "/",
-      builder: (context, state) => const ProfileListScreen(),
-    ),
-    GoRoute(
-      path: "/:uuid",
-      builder: (context, state) => ProfileDetailScreen(uuid: state.pathParameters['uuid']!),
-    ),
-    GoRoute(
-      path: "/edit/:uuid",
-      builder: (context, state) => ProfileEditScreen(uuid: state.pathParameters['uuid']!),
-    )
-  ],
-);
+class ProfileRoutes {
+  static const String namespace = "/profile";
+  static final shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: "Profile Shell");
+
+  static StatefulShellBranch branch = StatefulShellBranch(
+    navigatorKey: shellNavigatorKey,
+    routes: [
+      GoRoute(
+        path: namespace,
+        builder: (context, state) => const ProfileListScreen(),
+      ),
+      GoRoute(
+        path: "$namespace/:uuid",
+        builder: (context, state) => ProfileDetailScreen(uuid: state.pathParameters['uuid']!),
+      ),
+      GoRoute(
+        path: "$namespace/edit/:uuid",
+        builder: (context, state) => ProfileEditScreen(uuid: state.pathParameters['uuid']!),
+      )
+    ],
+  );
+}

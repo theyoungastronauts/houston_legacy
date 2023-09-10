@@ -5,7 +5,10 @@ import 'package:app/src/feature/auth/screens/edit_profile_screen.dart';
 import 'package:app/src/feature/auth/screens/login_screen.dart';
 import 'package:app/src/feature/auth/screens/register_screen.dart';
 import 'package:app/src/feature/food/routes.dart';
+import 'package:app/src/feature/profile/routes.dart';
 import 'package:go_router/go_router.dart';
+
+const defaultAppRoute = '/food';
 
 final appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
@@ -26,11 +29,13 @@ final appRouter = GoRouter(
       path: "/edit-profile",
       builder: (context, state) => const EditProfileScreen(),
     ),
-    ShellRoute(
-      builder: (context, state, child) => DashboardContainer(child: child),
-      routes: [
-        foodRoutes,
-        //::HOUSTON_INSERT_ROUTE::
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return DashboardContainer(navigationShell: navigationShell);
+      },
+      branches: [
+        FoodRoutes.branch,
+        ProfileRoutes.branch,
       ],
     )
   ],

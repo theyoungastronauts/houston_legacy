@@ -53,7 +53,7 @@ class EditProfileScreen extends BaseScreen {
                         );
 
                         if (newEmail != null) {
-                          final success = ref.read(sessionProvider.notifier).changeEmail(newEmail);
+                          ref.read(sessionProvider.notifier).changeEmail(newEmail);
                         }
                       },
                     ),

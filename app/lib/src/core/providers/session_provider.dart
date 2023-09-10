@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/src/config/env.dart';
 import 'package:app/src/core/app.dart';
 import 'package:app/src/core/models/app_session.dart';
+import 'package:app/src/core/navigation/app_router.dart';
 import 'package:app/src/core/singletons/singletons.dart';
 import 'package:app/src/core/utils/toast.dart';
 import 'package:app/src/core/utils/validation.dart';
@@ -28,7 +29,7 @@ class SessionProvider extends StateNotifier<AppSession> {
 
     if (session != null) {
       final context = rootNavigatorKey.currentContext!;
-      context.replace('/food');
+      context.go(defaultAppRoute);
     }
     addAuthStateChangeListener();
   }
@@ -47,7 +48,7 @@ class SessionProvider extends StateNotifier<AppSession> {
 
           state = state.copyWith(redirecting: true, session: session, profile: profile);
           final context = rootNavigatorKey.currentContext!;
-          context.replace('/food');
+          context.go(defaultAppRoute);
           state = state.copyWith(redirecting: false);
         }
         return;

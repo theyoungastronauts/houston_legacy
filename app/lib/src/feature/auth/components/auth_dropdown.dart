@@ -36,7 +36,7 @@ class AuthDropdown extends BaseComponent {
                   "Edit Profile",
                 ),
                 onTap: () {
-                  context.push(Uri(path: '/edit-profile').toString());
+                  context.push('/edit-profile');
                 },
               ),
               const PopupMenuDivider(),
