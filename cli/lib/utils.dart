@@ -71,6 +71,7 @@ Future<void> insertTextInFile({
   required String value,
   String spacer = "\n",
   bool preventDuplicates = true,
+  String? duplicateLookup,
   bool prepend = false,
 }) async {
   final f = File(path);
@@ -79,7 +80,7 @@ Future<void> insertTextInFile({
     spacer = "";
   }
 
-  if (preventDuplicates && _textExists(text, value)) {
+  if (preventDuplicates && _textExists(text, duplicateLookup ?? value)) {
     return;
   }
 
@@ -95,11 +96,12 @@ Future<void> insertTextInFileAtToken({
   required String token,
   required String value,
   bool preventDuplicates = true,
+  String? duplicateLookup,
 }) async {
   final f = File(path);
   String text = await f.readAsString();
 
-  if (preventDuplicates && _textExists(text, value)) {
+  if (preventDuplicates && _textExists(text, duplicateLookup ?? value)) {
     print(orange("text already exists in file"));
     return;
   }

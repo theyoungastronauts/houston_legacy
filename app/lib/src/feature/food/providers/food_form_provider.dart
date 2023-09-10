@@ -50,6 +50,7 @@ class FoodFormProvider extends HoustonFoodFormProvider {
   }
 }
 
-final foodFormProvider = StateNotifierProvider.family<FoodFormProvider, Food, String>((ref, uuid) {
+final foodFormProvider =
+    StateNotifierProvider.family<FoodFormProvider, Food, String>((ref, uuid) {
   return FoodFormProvider(ref, uuid, Food.empty());
 });

@@ -113,12 +113,14 @@ Future<void> scaffoldFeature({
       path: dashboardPath,
       token: DASHBOARD_TAB_INSERT_TOKEN,
       value: 'NavigationDestination(label: "${pascalCase(name)}", icon: Icon(Icons.star),),',
+      duplicateLookup: 'NavigationDestination(label: "${pascalCase(name)}"',
     );
 
     await insertTextInFileAtToken(
       path: dashboardPath,
       token: DASHBOARD_NAV_INSERT_TOKEN,
       value: 'NavigationRailDestination(label: Text("${pascalCase(name)}"), icon: Icon(Icons.star),),',
+      duplicateLookup: 'NavigationRailDestination(label: Text("${pascalCase(name)}")',
     );
   }
 
@@ -151,7 +153,8 @@ Future<void> scaffoldFeature({
   if (runPostGenerator) {
     print(white("Running generate function in flutter project..."));
 
-    final args = "packages pub run build_runner build --delete-conflicting-outputs --build-filter=$appGeneratedPath".split(" ");
+    // final args = "packages pub run build_runner build --delete-conflicting-outputs --build-filter=$appGeneratedPath".split(" ");
+    final args = "packages pub run build_runner build --delete-conflicting-outputs".split(" ");
     final process = await Process.start("flutter", args, workingDirectory: appDir());
     await process.stdout.transform(utf8.decoder).forEach((line) => print(yellow(line)));
   }

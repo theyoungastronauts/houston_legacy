@@ -23,15 +23,11 @@ class DashboardContainer extends BaseComponent {
           },
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.food_bank),
               label: "Food",
+              icon: Icon(Icons.food_bank),
             ),
             NavigationDestination(
               label: "Album",
-              icon: Icon(Icons.star),
-            ),
-            NavigationDestination(
-              label: "Food",
               icon: Icon(Icons.star),
             ),
             //::HOUSTON_INSERT_TAB::
@@ -63,15 +59,11 @@ class DashboardContainer extends BaseComponent {
                   labelType: NavigationRailLabelType.all,
                   destinations: const [
                     NavigationRailDestination(
-                      icon: Icon(Icons.food_bank),
                       label: Text("Food"),
+                      icon: Icon(Icons.food_bank),
                     ),
                     NavigationRailDestination(
                       label: Text("Album"),
-                      icon: Icon(Icons.star),
-                    ),
-                    NavigationRailDestination(
-                      label: Text("Food"),
                       icon: Icon(Icons.star),
                     ),
                     //::HOUSTON_INSERT_NAV::
