@@ -14,7 +14,9 @@ class FoodCard extends BaseComponent {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        context.push("${FoodRoutes.namespace}/${food.uuid}");
+        if (context.mounted) {
+          context.push("${FoodRoutes.namespace}/${food.uuid}");
+        }
       },
       child: Card(
         child:

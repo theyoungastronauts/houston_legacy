@@ -10,7 +10,6 @@ import 'package:dcli/dcli.dart';
 import 'package:mason/mason.dart' as mason;
 
 const ROUTER_ROUTE_INSERT_TOKEN = "//::HOUSTON_INSERT_ROUTE::";
-const DASHBOARD_ROUTE_INSERT_TOKEN = "//::HOUSTON_INSERT_ROUTE::";
 const DASHBOARD_TAB_INSERT_TOKEN = "//::HOUSTON_INSERT_TAB::";
 const DASHBOARD_NAV_INSERT_TOKEN = "//::HOUSTON_INSERT_NAV::";
 
@@ -101,14 +100,6 @@ Future<void> scaffoldFeature({
 
   final dashboardPath = "${appModuleDirectory()}/src/core/navigation/dashboard_container.dart";
   if (updateNavigation) {
-    // final currentRouteCount = await countSpecificStringInFile(path: dashboardPath, search: "Route(),");
-
-    // await insertTextInFileAtToken(
-    //   path: dashboardPath,
-    //   token: DASHBOARD_ROUTE_INSERT_TOKEN,
-    //   value: "const ${pascalCase(name)}Route(),",
-    // );
-
     await insertTextInFileAtToken(
       path: dashboardPath,
       token: DASHBOARD_TAB_INSERT_TOKEN,

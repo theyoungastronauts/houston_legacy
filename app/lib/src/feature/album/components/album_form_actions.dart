@@ -8,7 +8,6 @@ import '../../../core/components/base_component.dart';
 import '../../../core/components/buttons.dart';
 import '../providers/album_form_provider.dart';
 
-
 class AlbumFormActions extends BaseComponent {
   final String uuid;
   const AlbumFormActions({
@@ -35,7 +34,9 @@ class AlbumFormActions extends BaseComponent {
               onPressed: () async {
                 final confirmed = await provider.discard();
                 if (confirmed) {
-                  context.pop();
+                  if (context.mounted) {
+                    context.pop();
+                  }
                 }
               },
             ),
@@ -50,8 +51,10 @@ class AlbumFormActions extends BaseComponent {
                       onPressed: () async {
                         final success = await provider.delete();
                         if (success == true) {
-                          context.pop();
-                          context.pop();
+                          if (context.mounted) {
+                            context.pop();
+                            context.pop();
+                          }
                         }
                       },
                     ),
@@ -61,11 +64,12 @@ class AlbumFormActions extends BaseComponent {
                   variant: AppColorVariant.success,
                   onPressed: () async {
                     final success = await provider.submit();
-                    if(success == true){
-                      context.pop();
+                    if (success == true) {
+                      if (context.mounted) {
+                        context.pop();
+                      }
                       Toast.message("Album saved successfully!");
                     }
-
                   },
                 ),
               ],

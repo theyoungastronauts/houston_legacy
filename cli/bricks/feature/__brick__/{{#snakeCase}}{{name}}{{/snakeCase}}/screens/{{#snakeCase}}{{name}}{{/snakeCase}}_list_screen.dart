@@ -17,14 +17,16 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}ListScreen extends BaseScreen {
       actions: const [],
     );
   }
+  
   @override
-
   FloatingActionButton? floatingActionButton(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
       onPressed: () {
         ref.read({{#camelCase}}{{name}}{{/camelCase}}FormProvider("").notifier).clear();
         {{=<% %>=}}
-        context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/new");
+        if(context.mounted) {
+          context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/new");
+        }
         <%={{ }}=%>
       },
       child: const Icon(Icons.add),

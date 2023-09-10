@@ -25,7 +25,9 @@ class FoodListScreen extends BaseScreen {
       onPressed: () {
         ref.read(foodFormProvider("").notifier).clear();
 
-        context.push("${FoodRoutes.namespace}/edit/new");
+        if (context.mounted) {
+          context.push("${FoodRoutes.namespace}/edit/new");
+        }
       },
       child: const Icon(Icons.add),
     );

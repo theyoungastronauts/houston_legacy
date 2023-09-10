@@ -35,7 +35,9 @@ class FoodDetailScreen extends BaseScreen {
                         .read(foodFormProvider(food.uuid).notifier)
                         .load(food.uuid);
 
-                    context.push("${FoodRoutes.namespace}/edit/${food.uuid}");
+                    if (context.mounted) {
+                      context.push("${FoodRoutes.namespace}/edit/${food.uuid}");
+                    }
                   },
                 )
               ]

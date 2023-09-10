@@ -17,7 +17,9 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}Card extends BaseComponent {
     return InkWell(
       onTap: () {
         {{=<% %>=}}
-        context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/${<% #camelCase %><% name %><% /camelCase %>.uuid}");
+        if(context.mounted) {
+          context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/${<% #camelCase %><% name %><% /camelCase %>.uuid}");
+        }
         <%={{ }}=%>
       },
       child: Card(

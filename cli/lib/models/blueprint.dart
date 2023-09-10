@@ -1,8 +1,9 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:cli/constants.dart';
 import 'package:cli/models/blueprint_property.dart';
 import 'package:cli/strings.dart';
 import 'package:cli/utils.dart';
-import 'package:dcli/dcli.dart';
 import 'package:yaml/yaml.dart';
 import 'package:collection/collection.dart';
 

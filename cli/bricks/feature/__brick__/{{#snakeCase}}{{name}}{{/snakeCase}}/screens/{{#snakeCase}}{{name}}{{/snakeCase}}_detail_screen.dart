@@ -34,7 +34,9 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}DetailScreen extends BaseScreen {
                   onPressed: () {
                     ref.read({{#camelCase}}{{name}}{{/camelCase}}FormProvider({{#camelCase}}{{name}}{{/camelCase}}.uuid).notifier).load({{#camelCase}}{{name}}{{/camelCase}}.uuid);
                     {{=<% %>=}}
-                    context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/${<% #camelCase %><% name %><% /camelCase %>.uuid}");
+                    if(context.mounted) {
+                      context.push("${<% #pascalCase %><% name %><% /pascalCase %>Routes.namespace}/edit/${<% #camelCase %><% name %><% /camelCase %>.uuid}");
+                    }
                     <%={{ }}=%>
                   },
                 )

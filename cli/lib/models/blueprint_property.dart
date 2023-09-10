@@ -198,8 +198,8 @@ class BlueprintProperty {
     }
 
     if (type == "double" || type == "decimal") {
-      kwargs.add(Kwarg('decimal_places', 2)); //TODO: get from blueprint
-      kwargs.add(Kwarg('max_digits', 12)); //TODO: get from blueprint
+      kwargs.add(Kwarg('decimal_places', 2));
+      kwargs.add(Kwarg('max_digits', 12));
     }
 
     if (type == 'char') {

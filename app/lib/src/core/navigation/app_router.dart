@@ -6,7 +6,6 @@ import 'package:app/src/feature/auth/screens/settings_screen.dart';
 import 'package:app/src/feature/auth/screens/login_screen.dart';
 import 'package:app/src/feature/auth/screens/register_screen.dart';
 import 'package:app/src/feature/food/routes.dart';
-import 'package:app/src/feature/profile/routes.dart';
 import 'package:go_router/go_router.dart';
 
 const defaultAppRoute = '/food';

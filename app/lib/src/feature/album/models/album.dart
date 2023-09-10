@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../profile/models/profile.dart';
 
@@ -17,8 +19,7 @@ class Album with _$Album {
     required String description,
     required int year,
     @JsonKey(toJson: profileToJson) required Profile profile,
-    @JsonKey(name: "created_at", includeToJson: false)
-    required DateTime createdAt,
+    @JsonKey(name: "created_at", includeToJson: false) required DateTime createdAt,
   }) = _Album;
 
   factory Album.fromJson(Map<String, dynamic> json) => _$AlbumFromJson(json);

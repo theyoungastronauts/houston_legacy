@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile.freezed.dart';
@@ -12,12 +14,10 @@ class Profile with _$Profile {
     @JsonKey(includeToJson: false) required String uuid,
     required String avatar,
     required String bio,
-    @JsonKey(name: "created_at", includeToJson: false)
-    required DateTime createdAt,
+    @JsonKey(name: "created_at", includeToJson: false) required DateTime createdAt,
   }) = _Profile;
 
-  factory Profile.fromJson(Map<String, dynamic> json) =>
-      _$ProfileFromJson(json);
+  factory Profile.fromJson(Map<String, dynamic> json) => _$ProfileFromJson(json);
 
   factory Profile.empty() {
     return Profile(

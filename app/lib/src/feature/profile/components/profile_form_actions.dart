@@ -34,7 +34,9 @@ class ProfileFormActions extends BaseComponent {
               onPressed: () async {
                 final confirmed = await provider.discard();
                 if (confirmed) {
-                  context.pop();
+                  if (context.mounted) {
+                    context.pop();
+                  }
                 }
               },
             ),
@@ -49,8 +51,10 @@ class ProfileFormActions extends BaseComponent {
                       onPressed: () async {
                         final success = await provider.delete();
                         if (success == true) {
-                          context.pop();
-                          context.pop();
+                          if (context.mounted) {
+                            context.pop();
+                            context.pop();
+                          }
                         }
                       },
                     ),
@@ -61,7 +65,9 @@ class ProfileFormActions extends BaseComponent {
                   onPressed: () async {
                     final success = await provider.submit();
                     if (success == true) {
-                      context.pop();
+                      if (context.mounted) {
+                        context.pop();
+                      }
                       Toast.message("Profile saved successfully!");
                     }
                   },

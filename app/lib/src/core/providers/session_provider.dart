@@ -43,11 +43,11 @@ class SessionProvider extends StateNotifier<AppSession> {
         if (session != null) {
           final profile = await ProfileDbService().retrieve(uuid: session.user.id);
 
-          print("PROFILE: $profile");
-
           state = state.copyWith(redirecting: true, session: session, profile: profile);
           final context = rootNavigatorKey.currentContext!;
-          context.go(defaultAppRoute);
+          if (context.mounted) {
+            context.go(defaultAppRoute);
+          }
           state = state.copyWith(redirecting: false);
         }
         return;
@@ -127,7 +127,9 @@ class SessionProvider extends StateNotifier<AppSession> {
     await Supabase.instance.client.auth.signOut();
     state = state.copyWith(session: null, profile: null);
     final context = rootNavigatorKey.currentContext!;
-    context.replace('/');
+    if (context.mounted) {
+      context.replace('/');
+    }
   }
 
   Future<bool> changeEmail(String email) async {

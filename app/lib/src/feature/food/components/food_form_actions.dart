@@ -34,7 +34,7 @@ class FoodFormActions extends BaseComponent {
               type: AppButtonType.Text,
               onPressed: () async {
                 final confirmed = await provider.discard();
-                if (confirmed) {
+                if (confirmed && context.mounted) {
                   context.pop();
                 }
               },
@@ -49,7 +49,7 @@ class FoodFormActions extends BaseComponent {
                       variant: AppColorVariant.danger,
                       onPressed: () async {
                         final success = await provider.delete();
-                        if (success == true) {
+                        if (success == true && context.mounted) {
                           context.pop();
                           context.pop();
                         }
@@ -61,7 +61,7 @@ class FoodFormActions extends BaseComponent {
                   variant: AppColorVariant.success,
                   onPressed: () async {
                     final success = await provider.submit();
-                    if(success == true){
+                    if(success == true && context.mounted){
                       context.pop();
                       Toast.message("Food saved successfully!");
                     }
