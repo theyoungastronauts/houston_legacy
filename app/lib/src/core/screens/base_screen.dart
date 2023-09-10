@@ -24,7 +24,7 @@ abstract class BaseScreen extends ConsumerWidget {
           : ScreenUtils.size(context) == ScreenSize.md
               ? appBarMd(context, ref)
               : appBar(context, ref),
-      drawer: includeMainDrawer ? const MainDrawer() : null,
+      drawer: includeMainDrawer && ScreenUtils.atMost(context, ScreenSize.sm) ? const MainDrawer() : null,
       floatingActionButton: floatingActionButton(context, ref),
       bottomNavigationBar: bottomNavigationBar(context, ref),
       body: Padding(

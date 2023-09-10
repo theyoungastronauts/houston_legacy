@@ -1,7 +1,7 @@
 import 'package:app/src/core/app.dart';
 import 'package:app/src/core/navigation/dashboard_container.dart';
 import 'package:app/src/core/screens/landing_screen.dart';
-import 'package:app/src/feature/auth/screens/edit_profile_screen.dart';
+import 'package:app/src/feature/auth/screens/settings_screen.dart';
 import 'package:app/src/feature/auth/screens/login_screen.dart';
 import 'package:app/src/feature/auth/screens/register_screen.dart';
 import 'package:app/src/feature/food/routes.dart';
@@ -26,8 +26,8 @@ final appRouter = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
-      path: "/edit-profile",
-      builder: (context, state) => const EditProfileScreen(),
+      path: "/settings",
+      builder: (context, state) => const SettingsScreen(),
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {

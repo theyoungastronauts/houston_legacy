@@ -1,4 +1,5 @@
 import 'package:app/src/core/components/base_component.dart';
+import 'package:app/src/core/navigation/main_drawer.dart';
 import 'package:app/src/feature/auth/components/auth_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +11,6 @@ class DashboardContainer extends BaseComponent {
 
   @override
   Widget body(BuildContext context, WidgetRef ref) {
-    // TODO: implement body
     return Column(
       children: [
         Expanded(
@@ -38,11 +38,20 @@ class DashboardContainer extends BaseComponent {
 
   @override
   Widget bodyMd(BuildContext context, WidgetRef ref) {
-    return Material(
-      child: Row(
+    return Scaffold(
+      drawer: const MainDrawer(),
+      body: Row(
         children: [
           Column(
             children: [
+              Builder(builder: (context) {
+                return IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  icon: Icon(Icons.menu),
+                );
+              }),
               Expanded(
                 child: NavigationRail(
                   selectedIndex: navigationShell.currentIndex,
@@ -62,7 +71,6 @@ class DashboardContainer extends BaseComponent {
                   },
                 ),
               ),
-              const AuthDropdown(),
             ],
           ),
           const VerticalDivider(),

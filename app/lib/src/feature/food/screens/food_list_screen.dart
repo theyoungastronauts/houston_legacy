@@ -7,7 +7,7 @@ import '../providers/food_form_provider.dart';
 import '../components/food_list.dart';
 
 class FoodListScreen extends BaseScreen {
-  const FoodListScreen({super.key});
+  const FoodListScreen({super.key}) : super(includeMainDrawer: true);
 
   @override
   AppBar? appBar(BuildContext context, WidgetRef ref) {
