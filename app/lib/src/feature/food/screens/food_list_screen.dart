@@ -1,13 +1,11 @@
-import 'package:app/src/core/navigation/app_router.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/screens/base_screen.dart';
 import '../providers/food_form_provider.dart';
 import '../components/food_list.dart';
 
-@RoutePage()
 class FoodListScreen extends BaseScreen {
   const FoodListScreen({super.key});
 
@@ -20,12 +18,11 @@ class FoodListScreen extends BaseScreen {
   }
 
   @override
-  FloatingActionButton? floatingActionButton(
-      BuildContext context, WidgetRef ref) {
+  FloatingActionButton? floatingActionButton(BuildContext context, WidgetRef ref) {
     return FloatingActionButton(
       onPressed: () {
         ref.read(foodFormProvider("").notifier).clear();
-        AutoRouter.of(context).push(FoodEditRoute(uuid: ""));
+        context.push(Uri(path: '/food/edit/new').toString());
       },
       child: const Icon(Icons.add),
     );

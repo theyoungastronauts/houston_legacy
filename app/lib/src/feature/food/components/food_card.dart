@@ -1,9 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/components/base_component.dart';
-import '../../../core/navigation/app_router.dart';
 import '../models/food.dart';
 
 class FoodCard extends BaseComponent {
@@ -14,11 +13,10 @@ class FoodCard extends BaseComponent {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        AutoRouter.of(context).push(FoodDetailRoute(uuid: food.uuid));
+        context.push(Uri(path: "/food/${food.uuid}").toString());
       },
       child: Card(
-        child:
-            Padding(padding: const EdgeInsets.all(8.0), child: Text(food.name)),
+        child: Padding(padding: const EdgeInsets.all(8.0), child: Text(food.name)),
       ),
     );
   }

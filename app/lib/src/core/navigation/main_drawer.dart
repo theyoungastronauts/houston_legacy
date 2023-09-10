@@ -1,6 +1,5 @@
 import 'package:app/src/config/theme.dart';
 import 'package:app/src/core/components/base_component.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +23,6 @@ class MainDrawer extends BaseComponent {
               TextButton.icon(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  // AutoRouter.of(context).push(const StyleGuideScreenRoute());
                 },
                 icon: const Icon(Icons.color_lens),
                 label: const Text("Style Guide"),

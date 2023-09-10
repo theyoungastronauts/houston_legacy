@@ -1,13 +1,11 @@
 import 'package:app/src/config/theme.dart';
 import 'package:app/src/core/components/buttons.dart';
-import 'package:app/src/core/navigation/app_router.dart';
 import 'package:app/src/core/providers/session_provider.dart';
 import 'package:app/src/core/screens/base_screen.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class LandingScreen extends ConsumerStatefulWidget {
   const LandingScreen({super.key});
 
@@ -59,14 +57,14 @@ class LandingScreenContent extends BaseScreen {
                 AppButton(
                   label: "Login",
                   onPressed: () {
-                    AutoRouter.of(context).push(const LoginRoute());
+                    context.push(Uri(path: '/login').toString());
                   },
                 ),
                 const SizedBox(width: 8),
                 AppButton(
                   label: "Sign Up",
                   onPressed: () {
-                    AutoRouter.of(context).push(const RegisterRoute());
+                    context.push(Uri(path: '/register').toString());
                   },
                 ),
               ],
@@ -77,7 +75,7 @@ class LandingScreenContent extends BaseScreen {
               type: AppButtonType.Text,
               variant: AppColorVariant.secondary,
               onPressed: () {
-                AutoRouter.of(context).push(const DashboardRoute());
+                context.push(Uri(path: '/app').toString());
               },
             ),
           ],

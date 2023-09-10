@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../config/theme.dart';
 import '../../../core/utils/toast.dart';
 import '../../../core/components/base_component.dart';
 import '../../../core/components/buttons.dart';
 import '../providers/profile_form_provider.dart';
-
 
 class ProfileFormActions extends BaseComponent {
   final String uuid;
@@ -35,7 +34,7 @@ class ProfileFormActions extends BaseComponent {
               onPressed: () async {
                 final confirmed = await provider.discard();
                 if (confirmed) {
-                  AutoRouter.of(context).pop();
+                  context.pop();
                 }
               },
             ),
@@ -50,9 +49,8 @@ class ProfileFormActions extends BaseComponent {
                       onPressed: () async {
                         final success = await provider.delete();
                         if (success == true) {
-                          AutoRouter.of(context).popUntil((route) {
-                            return route.settings.name == "ProfileListRoute";
-                          });
+                          context.pop();
+                          context.pop();
                         }
                       },
                     ),
@@ -62,11 +60,10 @@ class ProfileFormActions extends BaseComponent {
                   variant: AppColorVariant.success,
                   onPressed: () async {
                     final success = await provider.submit();
-                    if(success == true){
-                      AutoRouter.of(context).pop();
+                    if (success == true) {
+                      context.pop();
                       Toast.message("Profile saved successfully!");
                     }
-
                   },
                 ),
               ],

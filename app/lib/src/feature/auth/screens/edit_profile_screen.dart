@@ -3,12 +3,10 @@ import 'package:app/src/core/components/empty_placeholder.dart';
 import 'package:app/src/core/providers/session_provider.dart';
 import 'package:app/src/core/utils/dialogs.dart';
 import 'package:app/src/core/utils/validation.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:app/src/core/screens/base_screen.dart';
 
-@RoutePage()
 class EditProfileScreen extends BaseScreen {
   const EditProfileScreen({super.key});
 
