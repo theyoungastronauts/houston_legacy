@@ -7,7 +7,8 @@ import '../models/{{#snakeCase}}{{name}}{{/snakeCase}}.dart';
 import '../providers/{{#snakeCase}}{{name}}{{/snakeCase}}_list_provider.dart';
 
 class {{#pascalCase}}{{name}}{{/pascalCase}}List extends BaseComponent {
-  const {{#pascalCase}}{{name}}{{/pascalCase}}List({Key? key}) : super(key: key);
+  final Function({{#pascalCase}}{{name}}{{/pascalCase}})? onPressed;
+  const {{#pascalCase}}{{name}}{{/pascalCase}}List({super.key, this.onPressed});
 
   @override
   Widget body(BuildContext context, WidgetRef ref) {
@@ -15,7 +16,7 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}List extends BaseComponent {
 
     return InfiniteList<{{#pascalCase}}{{name}}{{/pascalCase}}>(
       pagingController: listProvider.pagingController,
-      itemBuilder: (context, {{#camelCase}}{{name}}{{/camelCase}}, index) => {{#pascalCase}}{{name}}{{/pascalCase}}Card({{#camelCase}}{{name}}{{/camelCase}}),
+      itemBuilder: (context, {{#camelCase}}{{name}}{{/camelCase}}, index) => {{#pascalCase}}{{name}}{{/pascalCase}}Card({{#camelCase}}{{name}}{{/camelCase}}, onPressed: onPressed),
       emptyText: "No {{#titleCase}}{{name}}{{/titleCase}}s",
       onRefresh: listProvider.refresh,
     );

@@ -12,7 +12,7 @@ import '../services/{{#snakeCase}}{{name}}{{/snakeCase}}_db_service.dart';
 import '{{#snakeCase}}{{name}}{{/snakeCase}}_detail_provider.dart';
 import '{{#snakeCase}}{{name}}{{/snakeCase}}_list_provider.dart';
 {{#formProviderImportSession}}import '../../../core/providers/session_provider.dart';{{/formProviderImportSession}}
-
+{{#appFormProviderImports}}{{{.}}}{{/appFormProviderImports}}
 part '{{#snakeCase}}{{name}}{{/snakeCase}}_form_provider.g.dart';
 
 @houstonFormProvider
@@ -42,6 +42,11 @@ class {{#pascalCase}}{{name}}{{/pascalCase}}FormProvider extends Houston{{#pasca
   }
 
   {{#emptyFormOverride}}{{{.}}}{{/emptyFormOverride}}
+
+  {{#appCustomFormSetters}}{{{.}}}{{/appCustomFormSetters}}
+
+  {{#appAdditionalFormValidation}}{{{.}}}{{/appAdditionalFormValidation}}
+
   
 }
 

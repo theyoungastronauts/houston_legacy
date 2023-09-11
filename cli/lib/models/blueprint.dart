@@ -53,6 +53,45 @@ class BluePrint {
     return importStrings;
   }
 
+  List<String> get appFormImports {
+    final List<String> importStrings = [];
+    bool includeButton = false;
+    for (final p in properties) {
+      if (!PRIMITIVE_TYPES.contains(p.type)) {
+        importStrings.add("import '../../${snakeCase(p.type)}/models/${snakeCase(p.type)}.dart';");
+        importStrings.add("import '../../${snakeCase(p.type)}/components/${snakeCase(p.type)}_list.dart';");
+        includeButton = true;
+      }
+    }
+    if (includeButton) {
+      importStrings.insert(0, "import '../../../core/components/buttons.dart';");
+    }
+
+    return importStrings;
+  }
+
+  List<String> get appFormProviderImports {
+    final List<String> importStrings = [];
+    for (final p in properties) {
+      if (!PRIMITIVE_TYPES.contains(p.type)) {
+        importStrings.add("import '../../${snakeCase(p.type)}/models/${snakeCase(p.type)}.dart';");
+      }
+    }
+
+    return importStrings;
+  }
+
+  List<String> get appDbServiceImports {
+    final List<String> importStrings = [];
+    for (final p in properties) {
+      if (!PRIMITIVE_TYPES.contains(p.type)) {
+        importStrings.add("import '../../${snakeCase(p.type)}/services/${snakeCase(p.type)}_db_service.dart';");
+      }
+    }
+
+    return importStrings;
+  }
+
   List<String> get serviceModelImports {
     final List<String> importStrings = [];
     for (final p in properties) {
@@ -135,6 +174,21 @@ ${camelCase(property.name)}Controller.addListener(() {
     return items;
   }
 
+  List<String> get appCustomFormSetters {
+    final List<String> items = [];
+    for (final property in properties) {
+      if (!PRIMITIVE_TYPES.contains(property.type)) {
+        final value = """
+void set${pascalCase(property.name)}(${pascalCase(property.name)} ${camelCase(property.name)}) {
+  state = state.copyWith(${camelCase(property.name)}: ${camelCase(property.name)});
+}
+""";
+        items.add(value);
+      }
+    }
+    return items;
+  }
+
   List<String> get appFormValidators {
     final List<String> items = [];
 
@@ -180,16 +234,65 @@ TextFormField(
               ),
 """;
         items.add(value);
+      } else if (property.type.toLowerCase() != "profile") {
+        final uiHeading = properties.firstWhereOrNull((p) => p.uiHeading == 1)?.name ?? 'uuid';
+        final value = """
+ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text("${pascalCase(property.name)}"),
+                subtitle: model.${camelCase(property.name)}.exists ? Text(model.${camelCase(property.name)}.$uiHeading) : const Text("-"),
+                trailing: AppButton(
+                  label: "Choose",
+                  onPressed: () async {
+                    final ${pascalCase(property.name)}? ${camelCase(property.name)} = await showModalBottomSheet(
+                      context: context,
+                      builder: (context){
+                        return ${pascalCase(property.name)}List(
+                          onPressed: (${camelCase(property.name)}) => Navigator.of(context).pop(${camelCase(property.name)}),
+                        );
+                      },
+                    );
+                    if(${camelCase(property.name)} != null) {
+                      provider.set${pascalCase(property.name)}(${camelCase(property.name)});
+                    }
+                  },
+                ),
+              ),
+""";
+        items.add(value);
       }
     }
     return items;
+  }
+
+  String get appAdditionalFormValidation {
+    final List<String> items = [];
+
+    for (final property in properties) {
+      if (!PRIMITIVE_TYPES.contains(property.type)) {
+        items.add('if(!state.${camelCase(property.name)}.exists){ Toast.error("${pascalCase(property.name)} Required!"); return false;}');
+      }
+    }
+
+    if (items.isEmpty) {
+      return "";
+    }
+
+    return """
+@override
+bool additionalValidation() {
+  ${items.join('\n')}
+  return true;
+}
+""";
   }
 
   String get appJoins {
     final List<String> joins = [];
     for (final property in properties) {
       if (!PRIMITIVE_TYPES.contains(property.type)) {
-        joins.add("${property.type}(*)");
+        // joins.add("${property.type}(*)");
+        joins.add('${snakeCase(property.name)}(\${${pascalCase(property.name)}DbService().defaultSelect})');
       }
     }
 
@@ -272,9 +375,11 @@ TextFormField(
 
     sql.add('ALTER TABLE ONLY "public"."$name" ADD CONSTRAINT "${name}_pkey" PRIMARY KEY ("id");');
 
-    if (includesProfile) {
-      sql.add(
-          'ALTER TABLE ONLY "public"."$name" ADD CONSTRAINT "${name}_profile_fkey" FOREIGN KEY ("profile") REFERENCES "public"."profile"("id") ON DELETE CASCADE;');
+    for (final property in properties) {
+      if (!PRIMITIVE_TYPES.contains(property.type)) {
+        sql.add(
+            'ALTER TABLE ONLY "public"."$name" ADD CONSTRAINT "${name}_${snakeCase(property.name)}_fkey" FOREIGN KEY ("${snakeCase(property.name)}") REFERENCES "public"."${snakeCase(property.name)}"("id") ON DELETE CASCADE;');
+      }
     }
 
     return sql.join("\n");
@@ -289,6 +394,9 @@ TextFormField(
       'labelPlural': labelPlural,
       'properties': properties.map<Map<String, dynamic>>((p) => p.serialize()).toList(),
       'appModelImports': appModelImports,
+      'appFormImports': appFormImports,
+      'appFormProviderImports': appFormProviderImports,
+      'appDbServiceImports': appDbServiceImports,
       'serviceModelImports': serviceModelImports.toSet().toList()..sort(),
       'shouldRegisterUser': shouldRegisterUser,
       'uiHeading1': properties.firstWhereOrNull((p) => p.uiHeading == 1)?.name ?? 'uuid',
@@ -297,6 +405,8 @@ TextFormField(
       'appFormControllers': appFormControllers,
       'appFormControllerListeners': appFormControllerListeners,
       'appFormSetters': appFormSetters,
+      'appCustomFormSetters': appCustomFormSetters,
+      'appAdditionalFormValidation': appAdditionalFormValidation,
       'appFormValidators': appFormValidators,
       'appFormClearers': appFormClearers,
       'appFormInputs': appFormInputs,

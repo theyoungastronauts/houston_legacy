@@ -7,7 +7,8 @@ import '../models/album.dart';
 import '../providers/album_list_provider.dart';
 
 class AlbumList extends BaseComponent {
-  const AlbumList({Key? key}) : super(key: key);
+  final Function(Album)? onPressed;
+  const AlbumList({super.key, this.onPressed});
 
   @override
   Widget body(BuildContext context, WidgetRef ref) {
@@ -15,7 +16,7 @@ class AlbumList extends BaseComponent {
 
     return InfiniteList<Album>(
       pagingController: listProvider.pagingController,
-      itemBuilder: (context, album, index) => AlbumCard(album),
+      itemBuilder: (context, album, index) => AlbumCard(album, onPressed: onPressed),
       emptyText: "No Albums",
       onRefresh: listProvider.refresh,
     );

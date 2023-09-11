@@ -30,6 +30,10 @@ class DashboardContainer extends BaseComponent {
               label: "Album",
               icon: Icon(Icons.star),
             ),
+            NavigationDestination(
+              label: "Track",
+              icon: Icon(Icons.star),
+            ),
             //::HOUSTON_INSERT_TAB::
           ],
         ),
@@ -64,6 +68,10 @@ class DashboardContainer extends BaseComponent {
                     ),
                     NavigationRailDestination(
                       label: Text("Album"),
+                      icon: Icon(Icons.star),
+                    ),
+                    NavigationRailDestination(
+                      label: Text("Track"),
                       icon: Icon(Icons.star),
                     ),
                     //::HOUSTON_INSERT_NAV::

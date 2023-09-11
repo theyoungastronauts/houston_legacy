@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'food_form_provider.dart';
+part of 'track_form_provider.dart';
 
 // **************************************************************************
 // FormProviderGenerator
 // **************************************************************************
 
-class HoustonFoodFormProvider extends StateNotifier<Food> {
+class HoustonTrackFormProvider extends StateNotifier<Track> {
   final Ref ref;
   final String uuid;
   final GlobalKey<FormState> formKey = GlobalKey();
   bool changesMade = false;
 
-  HoustonFoodFormProvider(this.ref, this.uuid, Food initialState)
+  HoustonTrackFormProvider(this.ref, this.uuid, Track initialState)
       : super(initialState) {
     load(uuid);
     fieldListeners();
@@ -20,9 +20,9 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
 
   void load(String uuid) async {
     if (uuid.isNotEmpty && uuid != "new") {
-      final food = await FoodDbService().retrieve(uuid: uuid);
-      if (food != null) {
-        state = food;
+      final track = await TrackDbService().retrieve(uuid: uuid);
+      if (track != null) {
+        state = track;
       } else {
         handleEmpty();
       }
@@ -35,7 +35,7 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
   }
 
   void handleEmpty() {
-    state = Food.empty();
+    state = Track.empty();
   }
 
   Future<bool> discard() async {
@@ -58,18 +58,18 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
 
   Future<bool?> delete() async {
     final confirmed = await ConfirmDialog.show(
-      title: 'Are you sure you want to delete this Food?',
+      title: 'Are you sure you want to delete this Track?',
       destructive: true,
     );
 
     if (confirmed == true) {
       ref.read(globalLoadingProvider.notifier).start();
-      final success = await FoodDbService().delete(state);
+      final success = await TrackDbService().delete(state);
       ref.read(globalLoadingProvider.notifier).complete();
 
       if (success) {
-        ref.read(foodListProvider.notifier).refresh();
-        Toast.message("Food deleted.");
+        ref.read(trackListProvider.notifier).refresh();
+        Toast.message("Track deleted.");
         return true;
       } else {
         Toast.error();
@@ -93,12 +93,12 @@ class HoustonFoodFormProvider extends StateNotifier<Food> {
     }
 
     ref.read(globalLoadingProvider.notifier).start();
-    final food = await FoodDbService().save(state);
+    final track = await TrackDbService().save(state);
 
-    if (food != null) {
-      state = food;
-      ref.read(foodListProvider.notifier).refresh();
-      ref.invalidate(foodDetailProvider(food.uuid));
+    if (track != null) {
+      state = track;
+      ref.read(trackListProvider.notifier).refresh();
+      ref.invalidate(trackDetailProvider(track.uuid));
       ref.read(globalLoadingProvider.notifier).complete();
       return true;
     }

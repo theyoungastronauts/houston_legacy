@@ -6,13 +6,13 @@ import 'package:cli/scaffold_feature.dart';
 import 'package:dcli/dcli.dart';
 
 Future<void> main(List<String> args) async {
-  // scaffoldFeature(
-  //   name: "album",
-  //   runPostGenerator: true,
-  //   updateNavigation: true,
-  //   updateRoutes: true,
-  // );
-  // return;
+  scaffoldFeature(
+    name: "track",
+    runPostGenerator: true,
+    updateNavigation: true,
+    updateRoutes: true,
+  );
+  return;
   for (;;) {
     final line = ask('${green('houston')}${blue('::')}');
     if (line.isNotEmpty) {

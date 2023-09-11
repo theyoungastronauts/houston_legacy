@@ -1,7 +1,8 @@
 import 'package:annotations/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+{{#appFormImports}}{{{.}}}
+{{/appFormImports}}
 import '../../../core/components/base_component.dart';
 import '../providers/{{#snakeCase}}{{name}}{{/snakeCase}}_form_provider.dart';
 import '../models/{{#snakeCase}}{{name}}{{/snakeCase}}.dart';

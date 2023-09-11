@@ -79,8 +79,16 @@ class HoustonProfileFormProvider extends StateNotifier<Profile> {
     return null;
   }
 
+  bool additionalValidation() {
+    return true;
+  }
+
   Future<bool?> submit() async {
     if (!formKey.currentState!.validate()) {
+      return null;
+    }
+
+    if (!additionalValidation()) {
       return null;
     }
 

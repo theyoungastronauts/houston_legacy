@@ -4,25 +4,29 @@ import 'package:go_router/go_router.dart';
 
 import '../routes.dart';
 import '../../../core/components/base_component.dart';
-import '../models/album.dart';
+import '../models/track.dart';
 
-class AlbumCard extends BaseComponent {
-  final Album album;
-  final Function(Album)? onPressed;
-  const AlbumCard(this.album, {super.key, this.onPressed});
+class TrackCard extends BaseComponent {
+  final Track track;
+  final Function(Track)? onPressed;
+  const TrackCard(this.track, {super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
         if (onPressed != null) {
-          onPressed!(album);
+          onPressed!(track);
           return;
         }
-        context.push("${AlbumRoutes.namespace}/${album.uuid}");
+
+        if (context.mounted) {
+          context.push("${TrackRoutes.namespace}/${track.uuid}");
+        }
       },
       child: Card(
-        child: Padding(padding: const EdgeInsets.all(8.0), child: Text(album.title)),
+        child: Padding(
+            padding: const EdgeInsets.all(8.0), child: Text(track.title)),
       ),
     );
   }

@@ -7,3 +7,6 @@ properties:
   -
     name: artist
     type: char
+  -
+    name: album
+    type: Album
