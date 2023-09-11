@@ -23,6 +23,7 @@ dependencies:
   mason: ^0.1.0-dev.50
   supabase_flutter: ^1.10.14
   go_router: ^10.1.2
+  image_picker: ^1.0.4
 
   
 dev_dependencies:

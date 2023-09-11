@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "public"."album" (
 "description" "text" NOT NULL,
 "year" numeric NOT NULL,
 "profile" bigint NOT NULL,
+"image" "text" NOT NULL,
 "created_at" timestamp with time zone DEFAULT "now"() NOT NULL
 );
 ALTER TABLE "public"."album" OWNER TO "postgres";

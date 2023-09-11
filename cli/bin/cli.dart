@@ -7,7 +7,7 @@ import 'package:dcli/dcli.dart';
 
 Future<void> main(List<String> args) async {
   // scaffoldFeature(
-  //   name: "track",
+  //   name: "album",
   //   runPostGenerator: true,
   //   updateNavigation: true,
   //   updateRoutes: true,

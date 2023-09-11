@@ -1,6 +1,7 @@
 import 'package:annotations/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/components/image_uploader.dart';
 
 import '../../../core/components/base_component.dart';
 import '../providers/album_form_provider.dart';
@@ -33,6 +34,13 @@ class AlbumForm extends HoustonAlbumForm {
         validator: provider.yearValidator,
         decoration: const InputDecoration(label: Text("Year")),
       ),
+      ImageUploader(
+        label: "Image",
+        url: model.image,
+        onChange: (url) {
+          provider.setImage(url);
+        },
+      )
     ];
   }
 }

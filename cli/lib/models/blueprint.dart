@@ -7,7 +7,7 @@ import 'package:cli/utils.dart';
 import 'package:yaml/yaml.dart';
 import 'package:collection/collection.dart';
 
-const formElementTypes = ['char', 'text', 'url', 'int', 'double'];
+const formElementTypes = ['char', 'text', 'int', 'double'];
 
 class BluePrint {
   final String name;
@@ -56,15 +56,23 @@ class BluePrint {
   List<String> get appFormImports {
     final List<String> importStrings = [];
     bool includeButton = false;
+    bool includeImageUploader = false;
     for (final p in properties) {
       if (!PRIMITIVE_TYPES.contains(p.type) && p.type.toLowerCase() != "profile") {
         importStrings.add("import '../../${snakeCase(p.type)}/models/${snakeCase(p.type)}.dart';");
         importStrings.add("import '../../${snakeCase(p.type)}/components/${snakeCase(p.type)}_list.dart';");
         includeButton = true;
       }
+      if (p.isImage) {
+        includeImageUploader = true;
+      }
     }
     if (includeButton) {
       importStrings.insert(0, "import '../../../core/components/buttons.dart';");
+    }
+
+    if (includeImageUploader) {
+      importStrings.insert(0, "import '../../../core/components/image_uploader.dart';");
     }
 
     return importStrings;
@@ -73,7 +81,7 @@ class BluePrint {
   List<String> get appFormProviderImports {
     final List<String> importStrings = [];
     for (final p in properties) {
-      if (!PRIMITIVE_TYPES.contains(p.type)) {
+      if (!PRIMITIVE_TYPES.contains(p.type) && p.type.toLowerCase() != "profile") {
         importStrings.add("import '../../${snakeCase(p.type)}/models/${snakeCase(p.type)}.dart';");
       }
     }
@@ -177,7 +185,16 @@ ${camelCase(property.name)}Controller.addListener(() {
   List<String> get appCustomFormSetters {
     final List<String> items = [];
     for (final property in properties) {
-      if (!PRIMITIVE_TYPES.contains(property.type)) {
+      if (property.name.toLowerCase() == "profile") {
+        // nothing to do here
+      } else if (property.isImage) {
+        final value = """
+void set${pascalCase(property.name)}(String ${camelCase(property.name)}Url) {
+  state = state.copyWith(${camelCase(property.name)}: ${camelCase(property.name)}Url);
+}
+""";
+        items.add(value);
+      } else if (!PRIMITIVE_TYPES.contains(property.type)) {
         final value = """
 void set${pascalCase(property.name)}(${pascalCase(property.name)} ${camelCase(property.name)}) {
   state = state.copyWith(${camelCase(property.name)}: ${camelCase(property.name)});
@@ -236,6 +253,18 @@ TextFormField(
         items.add(value);
       } else if (property.type.toLowerCase() == "datetime") {
         //TODO: handle if needed
+      } else if (property.isImage) {
+        final value = """
+ImageUploader(
+  label: "${pascalCase(property.name)}",
+  url: model.${camelCase(property.name)},
+  onChange: (url) {
+    provider.setImage(url);
+  },
+)
+
+""";
+        items.add(value);
       } else if (property.type.toLowerCase() != "profile") {
         final uiHeading = properties.firstWhereOrNull((p) => p.uiHeading == 1)?.name ?? 'uuid';
         final value = """

@@ -13,6 +13,7 @@ class BlueprintProperty {
   final bool allowNull;
   final String module;
   final int? uiHeading;
+  final bool isImage;
 
   const BlueprintProperty({
     required this.name,
@@ -20,6 +21,7 @@ class BlueprintProperty {
     required this.allowBlank,
     required this.allowNull,
     required this.module,
+    required this.isImage,
     this.maxLength,
     this.defaultValue,
     this.uiHeading,
@@ -54,6 +56,7 @@ class BlueprintProperty {
       defaultValue: data['default'],
       module: module,
       uiHeading: data['ui_heading'],
+      isImage: data['image'] ?? false,
     );
   }
 
@@ -105,6 +108,7 @@ class BlueprintProperty {
     switch (type) {
       case "char":
       case "text":
+      case "url":
         return 'String';
       case "bool":
         return 'bool';

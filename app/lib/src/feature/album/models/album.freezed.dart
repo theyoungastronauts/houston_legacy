@@ -29,6 +29,7 @@ mixin _$Album {
   int get year => throw _privateConstructorUsedError;
   @JsonKey(toJson: profileToJson)
   Profile get profile => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -49,6 +50,7 @@ abstract class $AlbumCopyWith<$Res> {
       String description,
       int year,
       @JsonKey(toJson: profileToJson) Profile profile,
+      String image,
       @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 
   $ProfileCopyWith<$Res> get profile;
@@ -73,6 +75,7 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
     Object? description = null,
     Object? year = null,
     Object? profile = null,
+    Object? image = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -100,6 +103,10 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -129,6 +136,7 @@ abstract class _$$_AlbumCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       String description,
       int year,
       @JsonKey(toJson: profileToJson) Profile profile,
+      String image,
       @JsonKey(name: "created_at", includeToJson: false) DateTime createdAt});
 
   @override
@@ -150,6 +158,7 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
     Object? description = null,
     Object? year = null,
     Object? profile = null,
+    Object? image = null,
     Object? createdAt = null,
   }) {
     return _then(_$_Album(
@@ -177,6 +186,10 @@ class __$$_AlbumCopyWithImpl<$Res> extends _$AlbumCopyWithImpl<$Res, _$_Album>
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile,
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -195,6 +208,7 @@ class _$_Album extends _Album {
       required this.description,
       required this.year,
       @JsonKey(toJson: profileToJson) required this.profile,
+      required this.image,
       @JsonKey(name: "created_at", includeToJson: false)
       required this.createdAt})
       : super._();
@@ -218,12 +232,14 @@ class _$_Album extends _Album {
   @JsonKey(toJson: profileToJson)
   final Profile profile;
   @override
+  final String image;
+  @override
   @JsonKey(name: "created_at", includeToJson: false)
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'Album(id: $id, uuid: $uuid, title: $title, description: $description, year: $year, profile: $profile, createdAt: $createdAt)';
+    return 'Album(id: $id, uuid: $uuid, title: $title, description: $description, year: $year, profile: $profile, image: $image, createdAt: $createdAt)';
   }
 
   @override
@@ -238,14 +254,15 @@ class _$_Album extends _Album {
                 other.description == description) &&
             (identical(other.year, year) || other.year == year) &&
             (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, uuid, title, description, year, profile, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, uuid, title, description,
+      year, profile, image, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -269,6 +286,7 @@ abstract class _Album extends Album {
       required final String description,
       required final int year,
       @JsonKey(toJson: profileToJson) required final Profile profile,
+      required final String image,
       @JsonKey(name: "created_at", includeToJson: false)
       required final DateTime createdAt}) = _$_Album;
   _Album._() : super._();
@@ -290,6 +308,8 @@ abstract class _Album extends Album {
   @override
   @JsonKey(toJson: profileToJson)
   Profile get profile;
+  @override
+  String get image;
   @override
   @JsonKey(name: "created_at", includeToJson: false)
   DateTime get createdAt;

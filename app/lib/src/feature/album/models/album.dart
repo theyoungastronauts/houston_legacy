@@ -19,6 +19,7 @@ class Album with _$Album {
     required String description,
     required int year,
     @JsonKey(toJson: profileToJson) required Profile profile,
+    required String image,
     @JsonKey(name: "created_at", includeToJson: false)
     required DateTime createdAt,
   }) = _Album;
@@ -33,6 +34,7 @@ class Album with _$Album {
       description: "",
       year: 0,
       profile: Profile.empty(),
+      image: "",
       createdAt: DateTime.now(),
     );
   }

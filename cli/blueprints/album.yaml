@@ -17,5 +17,9 @@ properties:
     name: profile
     type: Profile
   -
+    name: image
+    type: url
+    image: true
+  -
     name: created_at
     type: datetime

@@ -12,7 +12,7 @@ import '../services/album_db_service.dart';
 import 'album_detail_provider.dart';
 import 'album_list_provider.dart';
 import '../../../core/providers/session_provider.dart';
-import '../../profile/models/profile.dart';
+
 part 'album_form_provider.g.dart';
 
 @houstonFormProvider
@@ -69,8 +69,8 @@ class AlbumFormProvider extends HoustonAlbumFormProvider {
     }
   }
 
-  void setProfile(Profile profile) {
-    state = state.copyWith(profile: profile);
+  void setImage(String imageUrl) {
+    state = state.copyWith(image: imageUrl);
   }
 
   @override
