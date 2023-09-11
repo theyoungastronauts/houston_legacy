@@ -11,10 +11,9 @@ Houston is a flutter meta-framework for scaffolding applications quickly. It use
 ### Libraries
 ```
 State Management: flutter_riverpod
-Routing: auto_route
+Routing: go_router
 Networking: dio
 Backend: supabase
-Singletons: get_it
 ```
 
 ### Getting Started
@@ -24,7 +23,7 @@ Singletons: get_it
     - profile required
     - album/food/etc => only if you want to use those features
 4. Execute the `cli/database/user_create.plpgsql` file => this will automatically create a trigger that fires when a new user is created to create a profile for them.
-5. run `flutter pub get` in the app folder
+5. in the root directory, run `make init`. If you don't have make on your machine, just run the commands listed in there. This will simply run all the `flutter/dart pub get` functions.
 6. Launch the app!
 
 ### Generating Code
