@@ -4,6 +4,7 @@ import 'package:app/src/config/env.dart';
 import 'package:app/src/core/app.dart';
 import 'package:app/src/core/models/app_session.dart';
 import 'package:app/src/core/navigation/app_router.dart';
+import 'package:app/src/core/utils/debugger.dart';
 import 'package:app/src/core/utils/toast.dart';
 import 'package:app/src/core/utils/validation.dart';
 import 'package:app/src/feature/auth/services/user_service.dart';
@@ -114,9 +115,11 @@ class SessionProvider extends StateNotifier<AppSession> {
       );
       Toast.message("Check your email!");
       return true;
-    } on AuthException catch (e) {
+    } on AuthException catch (e, st) {
+      Debugger.error(e.message, e, st);
       Toast.error(e.message);
-    } catch (e) {
+    } catch (e, st) {
+      Debugger.error("Register Error", e, st);
       Toast.error();
     }
 
