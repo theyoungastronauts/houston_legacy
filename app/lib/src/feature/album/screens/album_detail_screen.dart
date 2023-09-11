@@ -35,7 +35,10 @@ class AlbumDetailScreen extends BaseScreen {
                         .read(albumFormProvider(album.uuid).notifier)
                         .load(album.uuid);
 
-                    context.push("${AlbumRoutes.namespace}/edit/${album.uuid}");
+                    if (context.mounted) {
+                      context
+                          .push("${AlbumRoutes.namespace}/edit/${album.uuid}");
+                    }
                   },
                 )
               ]

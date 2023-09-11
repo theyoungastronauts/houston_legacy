@@ -25,7 +25,9 @@ class AlbumListScreen extends BaseScreen {
       onPressed: () {
         ref.read(albumFormProvider("").notifier).clear();
 
-        context.push("${AlbumRoutes.namespace}/edit/new");
+        if (context.mounted) {
+          context.push("${AlbumRoutes.namespace}/edit/new");
+        }
       },
       child: const Icon(Icons.add),
     );

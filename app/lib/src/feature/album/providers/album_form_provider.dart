@@ -12,7 +12,7 @@ import '../services/album_db_service.dart';
 import 'album_detail_provider.dart';
 import 'album_list_provider.dart';
 import '../../../core/providers/session_provider.dart';
-
+import '../../profile/models/profile.dart';
 part 'album_form_provider.g.dart';
 
 @houstonFormProvider
@@ -67,6 +67,19 @@ class AlbumFormProvider extends HoustonAlbumFormProvider {
     if (profile != null) {
       state = Album.empty().copyWith(profile: profile);
     }
+  }
+
+  void setProfile(Profile profile) {
+    state = state.copyWith(profile: profile);
+  }
+
+  @override
+  bool additionalValidation() {
+    if (!state.profile.exists) {
+      Toast.error("Profile Required!");
+      return false;
+    }
+    return true;
   }
 }
 

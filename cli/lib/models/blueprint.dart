@@ -57,7 +57,7 @@ class BluePrint {
     final List<String> importStrings = [];
     bool includeButton = false;
     for (final p in properties) {
-      if (!PRIMITIVE_TYPES.contains(p.type)) {
+      if (!PRIMITIVE_TYPES.contains(p.type) && p.type.toLowerCase() != "profile") {
         importStrings.add("import '../../${snakeCase(p.type)}/models/${snakeCase(p.type)}.dart';");
         importStrings.add("import '../../${snakeCase(p.type)}/components/${snakeCase(p.type)}_list.dart';");
         includeButton = true;
@@ -234,6 +234,8 @@ TextFormField(
               ),
 """;
         items.add(value);
+      } else if (property.type.toLowerCase() == "datetime") {
+        //TODO: handle if needed
       } else if (property.type.toLowerCase() != "profile") {
         final uiHeading = properties.firstWhereOrNull((p) => p.uiHeading == 1)?.name ?? 'uuid';
         final value = """

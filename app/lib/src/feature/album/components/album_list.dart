@@ -16,7 +16,8 @@ class AlbumList extends BaseComponent {
 
     return InfiniteList<Album>(
       pagingController: listProvider.pagingController,
-      itemBuilder: (context, album, index) => AlbumCard(album, onPressed: onPressed),
+      itemBuilder: (context, album, index) =>
+          AlbumCard(album, onPressed: onPressed),
       emptyText: "No Albums",
       onRefresh: listProvider.refresh,
     );

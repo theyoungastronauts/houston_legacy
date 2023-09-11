@@ -19,10 +19,14 @@ class AlbumCard extends BaseComponent {
           onPressed!(album);
           return;
         }
-        context.push("${AlbumRoutes.namespace}/${album.uuid}");
+
+        if (context.mounted) {
+          context.push("${AlbumRoutes.namespace}/${album.uuid}");
+        }
       },
       child: Card(
-        child: Padding(padding: const EdgeInsets.all(8.0), child: Text(album.title)),
+        child: Padding(
+            padding: const EdgeInsets.all(8.0), child: Text(album.title)),
       ),
     );
   }
