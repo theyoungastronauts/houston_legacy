@@ -261,7 +261,7 @@ ImageUploader(
   onChange: (url) {
     provider.setImage(url);
   },
-)
+),
 
 """;
         items.add(value);
